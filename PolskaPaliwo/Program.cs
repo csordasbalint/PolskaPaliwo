@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using PolskaPaliwo.Data;
+using PolskaPaliwo.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("appsettings.json");
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -10,8 +14,30 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Configure MongoDB for car data
+var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDBConnection");
+var mongoClient = new MongoClient(mongoConnectionString);
+var mongoDatabaseName = builder.Configuration.GetValue<string>("ConnectionStrings:MongoDBDatabase");
+var mongoDatabase = mongoClient.GetDatabase(mongoDatabaseName);
+
+builder.Services.AddSingleton<IMongoDatabase>(mongoDatabase);
+builder.Services.AddSingleton<ICarAdRepository, CarAdRepository>();
+
+
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 1;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+}).AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
