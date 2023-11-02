@@ -10,7 +10,7 @@ namespace PolskaPaliwo.Repository
 
         public CarAdRepository(IMongoDatabase database)
         {
-            _carAds = database.GetCollection<CarAd>("CarAds");
+            _carAds = database.GetCollection<CarAd>("CarAdvertisements"); //name of the mongodb collection
         }
 
         public List<CarAd> GetAllCarAds()
