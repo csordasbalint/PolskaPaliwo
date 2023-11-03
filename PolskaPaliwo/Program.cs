@@ -36,7 +36,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+});
 
 builder.Services.AddControllersWithViews();
 
