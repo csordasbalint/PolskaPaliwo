@@ -9,5 +9,6 @@ namespace PolskaPaliwo.Repository
         void CreateCar(CarAd carAd);
         void UpdateCar(string id, CarAd carAd);
         void DeleteCar(string id);
+        List<CarAd> SearchForCarAds(CarAd carAd);
     }
 }

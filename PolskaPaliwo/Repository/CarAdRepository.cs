@@ -40,6 +40,38 @@ namespace PolskaPaliwo.Repository
             var filter = Builders<CarAd>.Filter.Eq("Id", objectId);
             _carAds.DeleteOne(filter);
         }
-        
+
+        public List<CarAd> SearchForCarAds(CarAd carAd)
+        {
+            var filter = Builders<CarAd>.Filter.Empty;
+
+            foreach (var property in typeof(CarAd).GetProperties())
+            {
+                var value = property.GetValue(carAd);
+
+                if (value != null)
+                {
+                    if (property.PropertyType == typeof(int?) && value != null)
+                    {
+                        var rangeValues = value.ToString().Split('-');
+
+                        if (rangeValues.Length == 2)
+                        {
+                            filter &= Builders<CarAd>.Filter.Gte(property.Name, int.Parse(rangeValues[0]));
+                            filter &= Builders<CarAd>.Filter.Lte(property.Name, int.Parse(rangeValues[1]));
+                        }
+                        else
+                        {
+                            filter &= Builders<CarAd>.Filter.Eq(property.Name, value);
+                        }
+                    }
+                    else if (property.PropertyType == typeof(string) && !string.IsNullOrEmpty(value.ToString()))
+                    {
+                        filter &= Builders<CarAd>.Filter.Eq(property.Name, value);
+                    }
+                }
+            }
+            return _carAds.Find(filter).ToList();
+        }
     }
 }
