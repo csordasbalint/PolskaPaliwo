@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PolskaPaliwo.Models;
+using PolskaPaliwo.Repository;
 using System.Diagnostics;
 
 namespace PolskaPaliwo.Controllers
@@ -7,16 +8,21 @@ namespace PolskaPaliwo.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICarAdRepository _carAdRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICarAdRepository ICarAdRepository)
         {
             _logger = logger;
+            _carAdRepository = ICarAdRepository;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var carAds = _carAdRepository.GetAllCarAds();
+            return View(carAds);
         }
+
 
         public IActionResult Privacy()
         {

@@ -3,10 +3,12 @@
 }
 
 <div class="text-center">
+    <div class="row">
+
     <h1 class="display-4">Welcome to PolskaPaliwo!</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    
 
+    @*input form for searching*@
     <form method="post" asp-controller="CarAd"  asp-action="SearchForCarAds">
         <div class="form-group col-md-4">
             <label for="price">Price:</label>
@@ -113,4 +115,22 @@
     </form>
 
 
+    @*listing every car advertisement under the search form*@
+    <div class="col-md-8">
+        <h3>Car Advertisements</h3>
+        <ul>
+            @foreach (var carAd in Model)
+            {
+                <li>
+                    Brand: @carAd.Brand @carAd.Model,
+                    Price: @carAd.Price @carAd.Currency,
+                    Year: @carAd.ProductionYear,
+                    Mileage: @carAd.Mileage,
+
+                </li>
+            }
+        </ul>
+    </div>
+
+    </div>
 </div>
