@@ -18,23 +18,23 @@ namespace PolskaPaliwo.Repository
             return _carAds.Find(Builders<CarAd>.Filter.Empty).ToList();
         }
 
-        public CarAd GetCarById(string id)
+        public CarAd GetCarAdById(string id)
         {
             var filter = Builders<CarAd>.Filter.Eq(x => x.Id, id);
             return _carAds.Find(filter).FirstOrDefault();
         }
 
-        public void CreateCar(CarAd carAd)
+        public void CreateCarAd(CarAd carAd)
         {
             _carAds.InsertOne(carAd);
         }
 
-        public void UpdateCar(string id, CarAd carAd)
+        public void UpdateCarAd(string id, CarAd carAd)
         {
             _carAds.ReplaceOne(c => c.Id == id, carAd);
         }
 
-        public void DeleteCar(string id)
+        public void DeleteCarAd(string id)
         {
             var objectId = new ObjectId(id);
             var filter = Builders<CarAd>.Filter.Eq("Id", objectId);

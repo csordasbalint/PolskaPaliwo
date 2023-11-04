@@ -26,7 +26,7 @@ namespace PolskaPaliwo.Controllers
         [HttpGet]
         public IActionResult Details(string id)
         {
-            var carAd = _carAdRepository.GetCarById(id);
+            var carAd = _carAdRepository.GetCarAdById(id);
             return View("DetailedCarAdvertisementView", carAd);
         }
 
