@@ -26,8 +26,6 @@ namespace PolskaPaliwo.Controllers
         }
 
 
-
-
         [HttpGet]
         public IActionResult UpdateToGenerateForm(string id)
         {
@@ -106,6 +104,22 @@ namespace PolskaPaliwo.Controllers
                 return View("SearchResultsView", searchResults);
             }
             return RedirectToAction("Index");
+        }
+
+
+
+        [HttpGet]
+        public IActionResult CreateToGenerateForm()
+        {
+            return View("CreateFormView");
+        }
+
+
+        [HttpPost]
+        public IActionResult Create(CarAd carAd)
+        {
+            _carAdRepository.CreateCarAd(carAd);
+            return RedirectToAction("Index", "Home");
         }
 
     }
