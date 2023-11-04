@@ -53,16 +53,19 @@ namespace PolskaPaliwo.Repository
                 {
                     if (property.PropertyType == typeof(int?) && value != null)
                     {
-                        var rangeValues = value.ToString().Split('-');
-
-                        if (rangeValues.Length == 2)
+                        string stringValue = value.ToString();
+                        if (stringValue.Contains('-'))
                         {
-                            filter &= Builders<CarAd>.Filter.Gte(property.Name, int.Parse(rangeValues[0]));
-                            filter &= Builders<CarAd>.Filter.Lte(property.Name, int.Parse(rangeValues[1]));
+                            var rangeValues = stringValue.Split('-');
+                            if (rangeValues.Length == 2)
+                            {
+                                filter &= Builders<CarAd>.Filter.Gte(property.Name, int.Parse(rangeValues[0]));
+                                filter &= Builders<CarAd>.Filter.Lte(property.Name, int.Parse(rangeValues[1]));
+                            }
                         }
                         else
                         {
-                            filter &= Builders<CarAd>.Filter.Eq(property.Name, value);
+                            filter &= Builders<CarAd>.Filter.Eq(property.Name, int.Parse(stringValue));
                         }
                     }
                     else if (property.PropertyType == typeof(string) && !string.IsNullOrEmpty(value.ToString()))
