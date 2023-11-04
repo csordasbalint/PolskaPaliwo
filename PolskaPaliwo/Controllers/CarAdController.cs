@@ -28,11 +28,11 @@ namespace PolskaPaliwo.Controllers
 
 
 
-        
+        [HttpGet]
         public IActionResult UpdateToGenerateForm(string id)
         {
-            CarAd carAd = _carAdRepository.GetCarAdById(id);
-            return View("UpdateFormView",carAd);
+            CarAd carAdToUpdate = _carAdRepository.GetCarAdById(id);
+            return View("UpdateFormView", carAdToUpdate);
         }
 
         [HttpPost]
@@ -84,6 +84,29 @@ namespace PolskaPaliwo.Controllers
 
 
 
-        
+        [HttpGet]
+        public IActionResult DeleteToGenerateForm(string id)
+        {
+            var carAd = _carAdRepository.GetCarAdById(id);
+            return View("DeleteComfirmationView", carAd);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            string json = HttpContext.Session.GetString("SearchResults");
+            if (json != null)
+            {
+                List<CarAd> searchResults = JsonConvert.DeserializeObject<List<CarAd>>(json);
+                searchResults.Remove(searchResults.Where(x => x.Id == id).First());
+
+                HttpContext.Session.SetString("SearchResults", JsonConvert.SerializeObject(searchResults));
+                _carAdRepository.DeleteCarAd(id);
+
+                return View("SearchResultsView", searchResults);
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }
