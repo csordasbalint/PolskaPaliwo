@@ -29,9 +29,9 @@ namespace PolskaPaliwo.Repository
             _carAds.InsertOne(carAd);
         }
 
-        public void UpdateCarAd(string id, CarAd carAd)
+        public void UpdateCarAd(CarAd carAd)
         {
-            _carAds.ReplaceOne(c => c.Id == id, carAd);
+            _carAds.ReplaceOne(c => c.Id == carAd.Id, carAd);
         }
 
         public void DeleteCarAd(string id)

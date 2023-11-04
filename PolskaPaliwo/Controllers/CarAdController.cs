@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using PolskaPaliwo.Models;
 using PolskaPaliwo.Repository;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace PolskaPaliwo.Controllers
 {
@@ -23,11 +26,35 @@ namespace PolskaPaliwo.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult Details(string id)
+
+
+        
+        public IActionResult UpdateToGenerateForm(string id)
         {
-            var carAd = _carAdRepository.GetCarAdById(id);
-            return View("DetailedCarAdvertisementView", carAd);
+            CarAd carAd = _carAdRepository.GetCarAdById(id);
+            return View("UpdateFormView",carAd);
+        }
+
+        [HttpPost]
+        public IActionResult Update(CarAd carAd)
+        {
+            string json = HttpContext.Session.GetString("SearchResults");
+            if (json != null)
+            {
+                List<CarAd> searchResults = JsonConvert.DeserializeObject<List<CarAd>>(json);
+
+                int index = searchResults.FindIndex(c => c.Id == carAd.Id);
+                if (index != -1)
+                {
+                    searchResults[index] = carAd;
+                }
+
+                HttpContext.Session.SetString("SearchResults", JsonConvert.SerializeObject(searchResults));
+                _carAdRepository.UpdateCarAd(carAd);
+
+                return View("SearchResultsView", searchResults);
+            }
+            return View("Index");
         }
 
 
@@ -38,9 +65,25 @@ namespace PolskaPaliwo.Controllers
             var searchResults = _carAdRepository.SearchForCarAds(carAd).ToList();
             if (searchResults.Count != 0) //better 0 test needed
             {
+                string json = JsonConvert.SerializeObject(searchResults);
+                HttpContext.Session.SetString("SearchResults", json);
+
                 return View("SearchResultsView", searchResults);
             }
             return RedirectToAction("Index", "Home");
         }
+
+
+
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            var carAd = _carAdRepository.GetCarAdById(id);
+            return View("DetailedCarAdvertisementView", carAd);
+        }
+
+
+
+        
     }
 }
