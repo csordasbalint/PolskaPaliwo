@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using MongoDB.Driver;
@@ -12,10 +13,12 @@ namespace PolskaPaliwo.Controllers
     public class CarAdController : Controller
     {
         private readonly ICarAdRepository _carAdRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CarAdController(ICarAdRepository ICarAdRepository)
+        public CarAdController(ICarAdRepository ICarAdRepository, UserManager<IdentityUser> userManager)
         {
             _carAdRepository = ICarAdRepository;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -118,9 +121,34 @@ namespace PolskaPaliwo.Controllers
         [HttpPost]
         public IActionResult Create(CarAd carAd)
         {
+            carAd.CreatorId = _userManager.GetUserId(this.User);
             _carAdRepository.CreateCarAd(carAd);
             return RedirectToAction("Index", "Home");
         }
+
+
+
+
+
+
+
+        [HttpGet]
+        public IActionResult ResultsForPrevious()
+        {
+            string json = HttpContext.Session.GetString("SearchResults");
+            if (json != null)
+            {
+                List<CarAd> searchResults = JsonConvert.DeserializeObject<List<CarAd>>(json);
+                return View("SearchResultsView", searchResults);
+            }
+            return View("Index");
+        }
+
+
+
+
+
+
 
     }
 }

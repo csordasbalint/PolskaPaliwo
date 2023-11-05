@@ -30,5 +30,6 @@ namespace PolskaPaliwo.Models
         public int? RegistrationYear { get; set; }
         public string Location { get; set; }
         public string[]? Features { get; set; }
+        public string CreatorId { get; set; }
     }
 }

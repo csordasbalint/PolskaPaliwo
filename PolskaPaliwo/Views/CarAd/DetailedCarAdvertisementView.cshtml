@@ -1,4 +1,7 @@
-﻿@model PolskaPaliwo.Models.CarAd
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model PolskaPaliwo.Models.CarAd
 
 @{
     ViewData["Title"] = "DetailedCarAdvertisementView";
@@ -127,7 +130,15 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit advertisement", "UpdateToGenerateForm", new { Id = Model.Id }) |
-    @Html.ActionLink("Delete advertisement", "DeleteToGenerateForm", new { Id = Model.Id }) |
-    <a href="javascript:history.back()">Back to search results</a>
+    @if (Model.CreatorId == UserManager.GetUserId(User))
+    {
+        @Html.ActionLink("Edit advertisement", "UpdateToGenerateForm", new { Id = Model.Id }) 
+    }
+    <br>
+    @if (Model.CreatorId == UserManager.GetUserId(User))
+    {
+        @Html.ActionLink("Delete advertisement", "DeleteToGenerateForm", new { Id = Model.Id }) 
+    }
+    <br>
+    <a href="@Url.Action("ResultsForPrevious", "CarAd")">Back to search results</a>
 </div>
