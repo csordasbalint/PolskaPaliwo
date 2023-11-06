@@ -13,9 +13,9 @@ namespace PolskaPaliwo.Controllers
     public class CarAdController : Controller
     {
         private readonly ICarAdRepository _carAdRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CarAdController(ICarAdRepository ICarAdRepository, UserManager<IdentityUser> userManager)
+        public CarAdController(ICarAdRepository ICarAdRepository, UserManager<ApplicationUser> userManager)
         {
             _carAdRepository = ICarAdRepository;
             _userManager = userManager;
