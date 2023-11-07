@@ -6,18 +6,8 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        string fullName = "";
-        @if (UserManager.GetUserAsync(this.User) != null)
-        {
-            var user = await UserManager.GetUserAsync(this.User);
-            fullName = user.FirstName + " " + user.LastName;
-        }
-        else
-        {
-            fullName = "Guest";
-        }
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welcome @fullName!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welcome @UserManager.GetUserAsync(User).Result.FirstName !</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
