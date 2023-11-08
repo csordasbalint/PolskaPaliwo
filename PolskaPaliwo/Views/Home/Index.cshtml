@@ -122,6 +122,7 @@
             @foreach (var carAd in Model)
             {
                 <li>
+                    <img height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})"/>
                     Brand: @carAd.Brand @carAd.Model,
                     Price: @carAd.Price @carAd.Currency,
                     Year: @carAd.ProductionYear,

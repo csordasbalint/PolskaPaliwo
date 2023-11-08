@@ -119,17 +119,32 @@ namespace PolskaPaliwo.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(CarAd carAd)
+        public IActionResult Create(CarAd carAd, IFormFile pictureData)
         {
+            using (var stream = pictureData.OpenReadStream())
+            {
+                byte[] buffer = new byte[pictureData.Length];
+                stream.Read(buffer, 0, (int)pictureData.Length);
+
+                carAd.Data = buffer;
+                carAd.ContentType = pictureData.ContentType;
+            }
+
             carAd.CreatorId = _userManager.GetUserId(this.User);
             _carAdRepository.CreateCarAd(carAd);
             return RedirectToAction("Index", "Home");
         }
 
 
-
-
-
+        public IActionResult GetImage(string id) 
+        {
+            var carAd = _carAdRepository.GetCarAdById(id);
+            if (carAd.ContentType.Length > 3)
+            {
+                return new FileContentResult(carAd.Data, carAd.ContentType);
+            }
+            return BadRequest();   
+        }
 
 
         [HttpGet]
@@ -143,12 +158,6 @@ namespace PolskaPaliwo.Controllers
             }
             return View("Index");
         }
-
-
-
-
-
-
 
     }
 }
