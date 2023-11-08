@@ -2,15 +2,16 @@
 .ad-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    max-width: calc(100% - 40px);
+    justify-content: space-around;
+    max-width: 85%;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
 }
 
 /* Styles for individual car advertisement items */
 .advertisement {
-    width: calc(30% - 20px);
+    width: calc(35% - 40px); /* 25% width with some margin space */
     max-width: 400px;
     background-color: #ffffff;
     border: 1px solid #ccc;
@@ -41,4 +42,22 @@
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+/* Custom line to split the page */
+.custom-hr {
+    border: none;
+    height: 1px;
+    opacity: 0.5;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+    margin: 10px 0;
+    background-color: #0D6EFD;
+}
+
+
+/* removes bullet symbols from listings */
+ul {
+    list-style: none;
+    /* position: absolute;
+    right: 0; */
 }
