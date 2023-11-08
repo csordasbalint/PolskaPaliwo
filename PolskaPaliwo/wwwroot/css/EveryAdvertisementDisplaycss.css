@@ -1,0 +1,44 @@
+﻿/* Flexbox layout for the ad container */
+.ad-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: calc(100% - 40px);
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Styles for individual car advertisement items */
+.advertisement {
+    width: calc(30% - 20px);
+    max-width: 400px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #0D6EFD;
+}
+
+/* Styles for the car image */
+.ad-image {
+    width: 170px;
+    height: auto;
+    border-radius: 8px;
+    border: 3px solid #0D6EFD; /* asp.net identity blue :) */
+    margin-bottom: 10px;
+}
+
+/* Styles for text content in the advertisement */
+.ad-content {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Styles for heading in the advertisement */
+.ad-heading {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
