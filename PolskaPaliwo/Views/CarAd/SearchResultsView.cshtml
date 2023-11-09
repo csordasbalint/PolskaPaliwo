@@ -69,6 +69,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Location)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telephone)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Features)
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -131,6 +137,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telephone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Features)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>

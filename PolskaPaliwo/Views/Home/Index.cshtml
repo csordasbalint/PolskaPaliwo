@@ -107,6 +107,11 @@
         </div>
 
         <div class="form-group col-md-4">
+            <label for="telephone">Telephone:</label>
+                <input type="text" id="telephone" name="Price" class="form-control" />
+        </div>
+
+        <div class="form-group col-md-4">
             <label for="features">Features:</label>
             <input type="text" id="features" name="Features" class="form-control" placeholder="Feature 1, Feature 2, Feature 3" />
             <small class="form-text text-muted">Enter features separated by commas (e.g., Feature 1, Feature 2, Feature 3).</small>
@@ -127,9 +132,9 @@
                         <img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />
                         <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
                         <div class="ad-content">
-                            <p>Brand: @carAd.Brand @carAd.Brand</p>
                             <p>Price: @carAd.Price @carAd.Currency</p>
                             <p>Year: @carAd.ProductionYear</p>
+                            <p>Condition: @carAd.Condition</p>
                             <p>Mileage: @carAd.Mileage miles</p>  
                         </div>
                     </li>
