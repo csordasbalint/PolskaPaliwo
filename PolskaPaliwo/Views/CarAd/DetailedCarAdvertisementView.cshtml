@@ -135,11 +135,11 @@
 </div>
 
 <div>
-    @if (Model.CreatorId == UserManager.GetUserId(User))
+    @if (Model.CreatorId == UserManager.GetUserId(User) && UserManager.GetUserId(User) != null)
     {
         <a href="@Url.Action("DeleteToGenerateForm", "CarAd", new { Id = Model.Id })" class="btn btn-danger">Delete advertisement</a>
     }
-    @if (Model.CreatorId == UserManager.GetUserId(User))
+    @if (Model.CreatorId == UserManager.GetUserId(User) && UserManager.GetUserId(User) != null)
     {
         <a href="@Url.Action("UpdateToGenerateForm", "CarAd", new { Id = Model.Id })" class="btn btn-primary">Edit advertisement</a>
     }
