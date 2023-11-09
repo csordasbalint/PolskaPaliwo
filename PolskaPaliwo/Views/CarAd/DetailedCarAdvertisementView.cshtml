@@ -7,11 +7,14 @@
     ViewData["Title"] = "DetailedCarAdvertisementView";
 }
 
-<h1>DetailedCarAdvertisementView</h1>
+<link rel="stylesheet" href="~/css/EveryAdvertisementDisplaycss.css" />
+
+<h1>Detailed vehicle specification</h1>
 
 <div>
-    <h4>CarAd</h4>
-    <hr />
+    <a href="@Url.Action("ResultsForPrevious", "CarAd")" class="btn btn-primary ml-2">Back to search results</a>
+
+    <hr class="custom-hr" />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
@@ -128,17 +131,16 @@
             @Html.DisplayFor(model => model.Location)
         </dd>
     </dl>
+    <hr class="custom-hr" />
 </div>
+
 <div>
     @if (Model.CreatorId == UserManager.GetUserId(User))
     {
-        @Html.ActionLink("Edit advertisement", "UpdateToGenerateForm", new { Id = Model.Id }) 
+        <a href="@Url.Action("DeleteToGenerateForm", "CarAd", new { Id = Model.Id })" class="btn btn-danger">Delete advertisement</a>
     }
-    <br>
     @if (Model.CreatorId == UserManager.GetUserId(User))
     {
-        @Html.ActionLink("Delete advertisement", "DeleteToGenerateForm", new { Id = Model.Id }) 
+        <a href="@Url.Action("UpdateToGenerateForm", "CarAd", new { Id = Model.Id })" class="btn btn-primary">Edit advertisement</a>
     }
-    <br>
-    <a href="@Url.Action("ResultsForPrevious", "CarAd")">Back to search results</a>
 </div>
