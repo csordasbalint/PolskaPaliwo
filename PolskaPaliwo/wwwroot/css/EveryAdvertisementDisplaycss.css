@@ -9,10 +9,21 @@
     padding: 20px;
 }
 
+/* For navigating from home page listings to a detailed view */
+.ad-container-link {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    width: 100%; /* Make the link cover the entire width of the advertisement */
+    height: 100%;
+    display: block;
+}
+
+
 /* Styles for individual car advertisement items */
 .advertisement {
-    width: calc(35% - 40px); /* 25% width with some margin space */
-    max-width: 400px;
+    width: 300px; /* Set a fixed width for each advertisement */
+    max-width: 100%; /* Ensure the advertisement doesn't exceed the parent's width */
     background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -22,10 +33,11 @@
     border: 2px solid #0D6EFD;
 }
 
+
 /* Styles for the car image */
 .ad-image {
-    width: 170px;
-    height: auto;
+    width: 175px;
+    height: 125px;
     border-radius: 8px;
     border: 3px solid #0D6EFD; /* asp.net identity blue :) */
     margin-bottom: 10px;
