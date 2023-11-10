@@ -12,8 +12,15 @@
 <h1>Detailed vehicle specification</h1>
 
 <div>
-    <a href="@Url.Action("ResultsForPrevious", "CarAd")" class="btn btn-primary ml-2">Back to search results</a>
-
+    @if (ViewBag.Source == "fromSearch")
+    {
+        <a href="@Url.Action("ResultsForPrevious", "CarAd")" class="btn btn-primary ml-2">Back to search results</a>
+    }
+    else if (ViewBag.Source == "fromHome")
+    {
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary ml-2">Back to Home Page</a>
+    }
+    
     <hr class="custom-hr" />
     <dl class="row">
         <dt class = "col-sm-2">

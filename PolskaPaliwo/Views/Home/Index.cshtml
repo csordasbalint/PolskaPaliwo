@@ -116,8 +116,7 @@
             <input type="text" id="features" name="Features" class="form-control" placeholder="Feature 1, Feature 2, Feature 3" />
             <small class="form-text text-muted">Enter features separated by commas (e.g., Feature 1, Feature 2, Feature 3).</small>
         </div>
-
-        <button type="submit" class="btn btn-primary" style="margin-bottom: 20px">Search</button>
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 20px">Search</button>
     </form>
 
 
@@ -128,7 +127,7 @@
             <ul class="ad-container">
                 @foreach (var carAd in Model)
                 {
-                    <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id })" class="ad-link">
+                    <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromHome"})" class="ad-link">
                         <li class="advertisement">
                             <img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />
                             <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
