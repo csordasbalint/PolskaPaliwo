@@ -72,10 +72,11 @@ namespace PolskaPaliwo.Repository
                     {
                         filter &= Builders<CarAd>.Filter.Eq(property.Name, value);
                     }
-                    else if (property.PropertyType == typeof(string[]) && (value as string[])?.Any() == true)
-                    {
-                        filter &= Builders<CarAd>.Filter.In(property.Name, (string[])value);
-                    }
+                    //this part needs fix, messed up simple ints and strings - works only for string[] if its not commented out
+                    //else if (property.PropertyType == typeof(string[]) && (value as string[])?.Any() == true)
+                    //{
+                    //    filter &= Builders<CarAd>.Filter.In(property.Name, (string[])value);
+                    //}
                 }
             }
             return _carAds.Find(filter).ToList();
