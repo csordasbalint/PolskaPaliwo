@@ -61,13 +61,30 @@ namespace PolskaPaliwo.Controllers
 
 
         [HttpPost]
-        public IActionResult SearchForCarAds(CarAd carAd)
+        public async Task<IActionResult> SearchForCarAds(CarAd carAd)
         {
             var searchResults = _carAdRepository.SearchForCarAds(carAd).ToList();
             if (searchResults.Count != 0) //better 0 test needed
             {
                 string json = JsonConvert.SerializeObject(searchResults);
                 HttpContext.Session.SetString("SearchResults", json);
+
+                await Console.Out.WriteLineAsync(json);
+
+                var userId = _userManager.GetUserId(this.User);
+                if (userId != null)
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+                    if(user != null)
+                    {
+                        if (user.SearchResults.Count == 10)
+                        {
+                            user.SearchResults.RemoveAt(0);
+                        }
+                        user.SearchResults.Add(json);
+                        await _userManager.UpdateAsync(user);
+                    }
+                }
 
                 return View("SearchResultsView", searchResults);
             }
