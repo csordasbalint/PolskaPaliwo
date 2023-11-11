@@ -1,5 +1,7 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Misc;
 using PolskaPaliwo.Models;
 
 namespace PolskaPaliwo.Repository
@@ -41,6 +43,7 @@ namespace PolskaPaliwo.Repository
             _carAds.DeleteOne(filter);
         }
 
+
         public List<CarAd> SearchForCarAds(CarAd carAd)
         {
             var filter = Builders<CarAd>.Filter.Empty;
@@ -54,31 +57,27 @@ namespace PolskaPaliwo.Repository
                     if (property.PropertyType == typeof(int?) && value != null)
                     {
                         string stringValue = value.ToString();
-                        if (stringValue.Contains('-'))
-                        {
-                            var rangeValues = stringValue.Split('-');
-                            if (rangeValues.Length == 2)
-                            {
-                                filter &= Builders<CarAd>.Filter.Gte(property.Name, int.Parse(rangeValues[0]));
-                                filter &= Builders<CarAd>.Filter.Lte(property.Name, int.Parse(rangeValues[1]));
-                            }
-                        }
-                        else
-                        {
-                            filter &= Builders<CarAd>.Filter.Eq(property.Name, int.Parse(stringValue));
-                        }
+                        filter &= Builders<CarAd>.Filter.Eq(property.Name, int.Parse(stringValue));
                     }
                     else if (property.PropertyType == typeof(string) && !string.IsNullOrEmpty(value.ToString()))
                     {
                         filter &= Builders<CarAd>.Filter.Eq(property.Name, value);
                     }
-                    //this part needs fix, messed up simple ints and strings - works only for string[] if its not commented out
-                    //else if (property.PropertyType == typeof(string[]) && (value as string[])?.Any() == true)
-                    //{
-                    //    filter &= Builders<CarAd>.Filter.In(property.Name, (string[])value);
-                    //}
+                    else if (property.PropertyType == typeof(string[]) && (value as string[])?.Any(s => !string.IsNullOrEmpty(s)) == true)
+                    {
+                        var features = value as string[];
+                        var featuresArray = string.Join(", ", features).Split(",").Select(x => x.Trim()).ToArray();
+                        for (int i = 0; i < featuresArray.Length; i++)
+                        {
+                            filter &= Builders<CarAd>.Filter.Eq(property.Name, featuresArray[i]);
+                        }
+
+                    }
                 }
             }
+            //for testing - printing out the filter
+            //var filterJson = filter.Render(BsonSerializer.SerializerRegistry.GetSerializer<CarAd>(), BsonSerializer.SerializerRegistry);
+            //Console.WriteLine(filterJson);
             return _carAds.Find(filter).ToList();
         }
     }
