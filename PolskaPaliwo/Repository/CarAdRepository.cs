@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.AspNetCore.Identity;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Misc;
@@ -9,6 +10,7 @@ namespace PolskaPaliwo.Repository
     public class CarAdRepository : ICarAdRepository
     {
         private readonly IMongoCollection<CarAd> _carAds;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public CarAdRepository(IMongoDatabase database)
         {
@@ -61,7 +63,20 @@ namespace PolskaPaliwo.Repository
                     }
                     else if (property.PropertyType == typeof(string) && !string.IsNullOrEmpty(value.ToString()))
                     {
-                        filter &= Builders<CarAd>.Filter.Eq(property.Name, value);
+                        string stringValue = value.ToString();
+                        if (stringValue.Contains('-'))
+                        {
+                            var rangeValues = stringValue.Split('-');
+                            if (rangeValues.Length == 2)
+                            {
+                                filter &= Builders<CarAd>.Filter.Gte(property.Name, int.Parse(rangeValues[0]));
+                                filter &= Builders<CarAd>.Filter.Lte(property.Name, int.Parse(rangeValues[1]));
+                            }
+                        }
+                        else
+                        {
+                            filter &= Builders<CarAd>.Filter.Eq(property.Name, stringValue);
+                        }  
                     }
                     else if (property.PropertyType == typeof(string[]) && (value as string[])?.Any(s => !string.IsNullOrEmpty(s)) == true)
                     {
@@ -71,13 +86,14 @@ namespace PolskaPaliwo.Repository
                         {
                             filter &= Builders<CarAd>.Filter.Eq(property.Name, featuresArray[i]);
                         }
-
                     }
                 }
             }
             //for testing - printing out the filter
-            //var filterJson = filter.Render(BsonSerializer.SerializerRegistry.GetSerializer<CarAd>(), BsonSerializer.SerializerRegistry);
-            //Console.WriteLine(filterJson);
+            var filterJson = filter.Render(BsonSerializer.SerializerRegistry.GetSerializer<CarAd>(), BsonSerializer.SerializerRegistry);
+            Console.WriteLine(filterJson);
+
+
             return _carAds.Find(filter).ToList();
         }
     }
