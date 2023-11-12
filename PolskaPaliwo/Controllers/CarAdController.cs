@@ -61,7 +61,7 @@ namespace PolskaPaliwo.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> SearchForCarAds(CarAd carAd)
+        public IActionResult SearchForCarAds(CarAd carAd)
         {
             var searchResults = _carAdRepository.SearchForCarAds(carAd).ToList();
             if (searchResults.Count != 0) //better 0 test needed
@@ -69,22 +69,7 @@ namespace PolskaPaliwo.Controllers
                 string json = JsonConvert.SerializeObject(searchResults);
                 HttpContext.Session.SetString("SearchResults", json);
 
-                await Console.Out.WriteLineAsync(json);
-
-                var userId = _userManager.GetUserId(this.User);
-                if (userId != null)
-                {
-                    var user = await _userManager.FindByIdAsync(userId);
-                    if(user != null)
-                    {
-                        if (user.SearchResults.Count == 10)
-                        {
-                            user.SearchResults.RemoveAt(0);
-                        }
-                        user.SearchResults.Add(json);
-                        await _userManager.UpdateAsync(user);
-                    }
-                }
+                //await Console.Out.WriteLineAsync(json);
 
                 return View("SearchResultsView", searchResults);
             }
@@ -94,11 +79,34 @@ namespace PolskaPaliwo.Controllers
 
 
         [HttpGet]
-        public IActionResult Details(string id, string source)
+        public async Task<IActionResult> Details(string id, string source)
         {
             var carAd = _carAdRepository.GetCarAdById(id);
             ViewBag.Source = source;
 
+            var userId = _userManager.GetUserId(this.User);
+            if (userId != null)
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user != null)
+                {
+                    if (user.PreviousIds == null)
+                    {
+                        user.PreviousIds += id.ToString();
+                    }
+                    else if (user.PreviousIds.Count(x => x == ',') == 4)
+                    {
+                        int idx = user.PreviousIds.IndexOf(',');
+                        user.PreviousIds = user.PreviousIds.Substring(idx + 1);
+                        user.PreviousIds += "," + id.ToString();
+                    }
+                    else
+                    {
+                        user.PreviousIds += "," + id.ToString();
+                    }
+                    await _userManager.UpdateAsync(user);
+                }
+            }
             return View("DetailedCarAdvertisementView", carAd);
         }
 

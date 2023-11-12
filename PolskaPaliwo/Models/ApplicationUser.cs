@@ -8,20 +8,6 @@ namespace PolskaPaliwo.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        private List<string> _searchResults;
-
-        [NotMapped] // Exclude from database mapping
-        public List<string> SearchResults
-        {
-            get => _searchResults ??= new List<string>();
-            set => _searchResults = value;
-        }
-
-        // Serialized property for database storage
-        public string SerializedSearchResults
-        {
-            get => JsonConvert.SerializeObject(SearchResults);
-            set => SearchResults = value != null ? JsonConvert.DeserializeObject<List<string>>(value) : new List<string>();
-        }
+        public string PreviousIds { get; set; }
     }
 }
