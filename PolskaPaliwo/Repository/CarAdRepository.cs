@@ -96,5 +96,34 @@ namespace PolskaPaliwo.Repository
 
             return _carAds.Find(filter).ToList();
         }
+
+
+
+
+
+
+        public CarAd ListRecommendedCars()
+        {
+
+
+
+
+
+            return null;
+        }
+
+
+
+        //private method for extracting important parameters
+        
+
+        //private method for vectorizing and normalizing
+
+
+        //private method for calculating similarity (between previous searches and full db)
+
+
+        //ranking, giving back the top X ad
+            
     }
 }

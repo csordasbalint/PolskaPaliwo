@@ -186,5 +186,36 @@ namespace PolskaPaliwo.Controllers
             return View("Index");
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Recommendation()
+        {
+            var userId = _userManager.GetUserId(this.User);
+            if (userId != null)
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+            }
+
+            return BadRequest();
+        }
+
     }
 }
