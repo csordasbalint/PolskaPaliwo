@@ -10,7 +10,6 @@ namespace PolskaPaliwo.Repository
     public class CarAdRepository : ICarAdRepository
     {
         private readonly IMongoCollection<CarAd> _carAds;
-        private readonly UserManager<ApplicationUser> _userManager;
 
         public CarAdRepository(IMongoDatabase database)
         {
@@ -44,6 +43,7 @@ namespace PolskaPaliwo.Repository
             var filter = Builders<CarAd>.Filter.Eq("Id", objectId);
             _carAds.DeleteOne(filter);
         }
+
 
 
         public List<CarAd> SearchForCarAds(CarAd carAd)
@@ -100,22 +100,84 @@ namespace PolskaPaliwo.Repository
 
 
 
+        
 
-
-        public CarAd ListRecommendedCars()
+        public async Task ListRecommendedCars(string userId, string prevIds)
         {
+            var carIds = prevIds.Split(',');
 
+            List<CarAd> carAds = new List<CarAd>();
+            foreach (var itemId in carIds)
+            {
+                CarAd newCarAd = GetCarAdById(itemId);
 
+                carAds.Add(newCarAd);
+            }
 
+            Dictionary<string, int> featureCounts = CountFeatureOccurrences(carAds);
 
-
-            return null;
+            // Display feature counts
+            Console.WriteLine("Feature Counts:");
+            foreach (var kvp in featureCounts)
+            {
+                Console.WriteLine($"{kvp.Key}: {kvp.Value} times");
+            }
         }
 
 
 
+
+
+
+
+
+        private Dictionary<string, int> CountFeatureOccurrences(List<CarAd> carAds)
+        {
+            Dictionary<string, int> featureCounts = new Dictionary<string, int>();
+
+            foreach (var carAd in carAds)
+            {
+                // Extract relevant features (Brand, Model, Year...)
+                var features = new List<string>
+            {
+                $"Brand_{carAd.Brand}",
+                $"Model_{carAd.Model}",
+                $"Condition_{carAd.Condition}",
+                $"Year_{carAd.ProductionYear}",
+                $"Transmission_{carAd.Transmission}",
+                $"Type_{carAd.Type}",
+                $"Colour_{carAd.Colour}",
+                $"DoorsNumber_{carAd.DoorsNumber}",
+                $"FirstOwner_{carAd.FirstOwner}",
+            };
+
+                // Count feature occurrences
+                foreach (var feature in features)
+                {
+                    if (featureCounts.ContainsKey(feature))
+                    {
+                        featureCounts[feature]++;
+                    }
+                    else
+                    {
+                        featureCounts[feature] = 1;
+                    }
+                }
+            }
+
+            return featureCounts;
+        }
+
+
+
+
+
+
+
+
+
         //private method for extracting important parameters
-        
+
 
         //private method for vectorizing and normalizing
 
@@ -124,6 +186,6 @@ namespace PolskaPaliwo.Repository
 
 
         //ranking, giving back the top X ad
-            
+
     }
 }

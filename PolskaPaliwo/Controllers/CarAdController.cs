@@ -212,9 +212,19 @@ namespace PolskaPaliwo.Controllers
             if (userId != null)
             {
                 var user = await _userManager.FindByIdAsync(userId);
+
+                _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
             }
 
-            return BadRequest();
+            
+
+
+            
+
+
+
+
+            return Index();
         }
 
     }
