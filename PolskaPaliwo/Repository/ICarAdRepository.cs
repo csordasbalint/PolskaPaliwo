@@ -10,6 +10,6 @@ namespace PolskaPaliwo.Repository
         void UpdateCarAd(CarAd carAd);
         void DeleteCarAd(string id);
         List<CarAd> SearchForCarAds(CarAd carAd);
-        Task ListRecommendedCars(string id, string prevIds);
+        void ListRecommendedCars(string id, string prevIds);
     }
 }
