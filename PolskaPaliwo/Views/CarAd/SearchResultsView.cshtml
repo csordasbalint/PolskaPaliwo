@@ -1,4 +1,9 @@
-﻿@model IEnumerable<PolskaPaliwo.Models.CarAd>
+﻿@*@model IEnumerable<PolskaPaliwo.Models.CarAd>*@
+@{
+    // Retrieve recommended car lists from ViewBag
+    var searchresults = ViewBag.SearchResults as List<PolskaPaliwo.Models.CarAd>;
+    var recommendedAds = ViewBag.RecommendedAds as List<PolskaPaliwo.Models.CarAd>;
+}
 
 @{
     ViewData["Title"] = "SearchResultsView";
@@ -9,145 +14,178 @@
 <p>
     <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to main page</a>
 </p>
-<table class="table table-striped" id="pagination">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Currency)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Condition)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductionYear)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mileage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Power)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EngineSize)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FuelType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Drive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Transmission)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DoorsNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Colour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OriginCountry)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOwner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegistrationYear)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telephone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Features)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Currency)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Condition)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductionYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mileage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Power)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EngineSize)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FuelType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Drive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Transmission)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoorsNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Colour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OriginCountry)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstOwner)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telephone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Features)
-            </td>
-            <td>
-                <a href="@Url.Action("Details", "Carad", new { id = item.Id, source = "fromSearch" })" class="btn btn-primary">Details</a>
-            </td>
-        </tr>
+
+@if (recommendedAds != null && recommendedAds.Any())
+{
+    <table class="table table-striped" id="pagination">
+        <thead>
+            <tr>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Currency
+                </th>
+                <th>
+                    Condition
+                </th>
+                <th>
+                   Brand
+                </th>
+                <th>
+                   Model
+                </th>
+                <th>
+                   ProductionYear
+                </th>
+                <th>
+                   Mileage
+                </th>
+                <th>
+                   Power
+                </th>
+                <th>
+                   EngineSize
+                </th>
+                <th>
+                   FuelType
+                </th>
+                <th>
+                   Drive
+                </th>
+                <th>
+                   Transmission
+                </th>
+                <th>
+                   Type
+                </th>
+                <th>
+                   DoorsNumber
+                </th>
+                <th>
+                   Colour
+                </th>
+                <th>
+                   OriginCountry
+                </th>
+                <th>
+                   FirstOwner
+                </th>
+                <th>
+                   RegistrationYear
+                </th>
+                <th>
+                   Location
+                </th>
+                <th>
+                   Telephone
+                </th>
+                <th>
+                   Features
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in searchresults)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Currency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Condition)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductionYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mileage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Power)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EngineSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FuelType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Drive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Transmission)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoorsNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Colour)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OriginCountry)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstOwner)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegistrationYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telephone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Features)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", "Carad", new { id = item.Id, source = "fromSearch" })" class="btn btn-primary">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+
+
+@if (recommendedAds != null && recommendedAds.Any())
+{
+    <div>
+        <hr class="custom-hr" />
+        <h3>Recommended advertisements</h3>
+        <ul class="ad-container">
+            @foreach (var carAd in recommendedAds)
+            {
+                <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromHome"})" class="ad-link">
+                <li class="advertisement">
+                        @*<img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />*@
+                    <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
+                    <div class="ad-content">
+                        <p>Price: @carAd.Price @carAd.Currency</p>
+                        <p>Year: @carAd.ProductionYear</p>
+                        <p>Condition: @carAd.Condition</p>
+                        <p>Mileage: @carAd.Mileage miles</p>
+                    </div>
+                </li>
+                </a>
+            }
+        </ul>
+        <hr class="custom-hr" />
+    </div>
+}
+

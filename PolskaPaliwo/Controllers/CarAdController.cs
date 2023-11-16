@@ -61,17 +61,30 @@ namespace PolskaPaliwo.Controllers
 
 
         [HttpPost]
-        public IActionResult SearchForCarAds(CarAd carAd)
+        public async Task<IActionResult> SearchForCarAds(CarAd carAd)
         {
             var searchResults = _carAdRepository.SearchForCarAds(carAd).ToList();
             if (searchResults.Count != 0) //better 0 test needed
             {
                 string json = JsonConvert.SerializeObject(searchResults);
+                ViewBag.SearchResults = searchResults; //first viewbag
                 HttpContext.Session.SetString("SearchResults", json);
 
                 //await Console.Out.WriteLineAsync(json);
 
-                return View("SearchResultsView", searchResults);
+
+                var userId = _userManager.GetUserId(this.User);
+                if (userId != null)
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+
+                    List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
+                    ViewBag.RecommendedAds = recommendedAds; //second viewbag
+                    return View("SearchResultsView");
+                }
+
+
+                return View("SearchResultsView");
             }
             return RedirectToAction("Index", "Home");
         }
@@ -213,17 +226,11 @@ namespace PolskaPaliwo.Controllers
             {
                 var user = await _userManager.FindByIdAsync(userId);
 
-                _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
+                List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
+                return View("SearchResultsView", recommendedAds);
             }
 
-            
-
-
-            
-
-
-
-
+ 
             return Index();
         }
 

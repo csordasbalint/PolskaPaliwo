@@ -100,7 +100,7 @@ namespace PolskaPaliwo.Repository
 
 
 
-        public void ListRecommendedCars(string userId, string prevIds)
+        public List<CarAd> ListRecommendedCars(string userId, string prevIds)
         {
             var carIds = prevIds.Split(',');
 
@@ -142,9 +142,6 @@ namespace PolskaPaliwo.Repository
             }
 
 
-            
-            
-
             List<CarAd> allCarAds = GetAllCarAds(); //összes hirdetés kigyűjtése db-ből
 
             Dictionary<string, double> similarityScores = new Dictionary<string, double>();
@@ -166,16 +163,34 @@ namespace PolskaPaliwo.Repository
 
 
             //tmp kiírás egyelőre, top 10 hasonló hirdetés
-            var top5SimilarCars = similarityScores
+            //var top5SimilarCars = similarityScores
+            //    .OrderByDescending(kvp => kvp.Value)
+            //    .Take(10)
+            //    .ToList();
+
+            //foreach (var kvp in top5SimilarCars)
+            //{
+            //    Console.WriteLine($"CarAd ID: {kvp.Key}, Similarity score: {kvp.Value}");
+            //}
+
+
+            //csak az id-k visszatérésnek
+            var topXSimilarCarIds = similarityScores
                 .OrderByDescending(kvp => kvp.Value)
                 .Take(10)
+                .Select(kvp => kvp.Key)
                 .ToList();
 
-            foreach (var kvp in top5SimilarCars)
+            List<CarAd> recommendedCars = new List<CarAd>();
+
+            foreach (var id in topXSimilarCarIds)
             {
-                Console.WriteLine($"CarAd ID: {kvp.Key}, Similarity score: {kvp.Value}");
+                CarAd currentCarAd = GetCarAdById(id);
+                recommendedCars.Add(currentCarAd);
             }
 
+
+            return recommendedCars;
         }
 
 
