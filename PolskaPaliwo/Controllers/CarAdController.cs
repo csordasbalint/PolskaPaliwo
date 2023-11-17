@@ -188,13 +188,24 @@ namespace PolskaPaliwo.Controllers
 
 
         [HttpGet]
-        public IActionResult ResultsForPrevious()
+        public async Task<IActionResult> ResultsForPrevious()
         {
             string json = HttpContext.Session.GetString("SearchResults");
             if (json != null)
             {
                 List<CarAd> searchResults = JsonConvert.DeserializeObject<List<CarAd>>(json);
-                return View("SearchResultsView", searchResults);
+                ViewBag.SearchResults = searchResults;
+                var userId = _userManager.GetUserId(this.User);
+                if (userId != null)
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+
+                    List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
+                    ViewBag.RecommendedAds = recommendedAds; //second viewbag
+                    return View("SearchResultsView");
+                }
+                return View("SearchResultsView");
+
             }
             return View("Index");
         }

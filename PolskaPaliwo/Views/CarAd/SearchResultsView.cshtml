@@ -15,7 +15,7 @@
     <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to main page</a>
 </p>
 
-@if (recommendedAds != null && recommendedAds.Any())
+@if (searchresults != null && searchresults.Any())
 {
     <table class="table table-striped" id="pagination">
         <thead>
@@ -171,7 +171,7 @@
         <ul class="ad-container">
             @foreach (var carAd in recommendedAds)
             {
-                <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromHome"})" class="ad-link">
+                <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromSearch"})" class="ad-link">
                 <li class="advertisement">
                         @*<img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />*@
                     <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
