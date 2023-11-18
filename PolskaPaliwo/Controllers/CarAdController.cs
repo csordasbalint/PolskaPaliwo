@@ -37,7 +37,7 @@ namespace PolskaPaliwo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(CarAd carAd)
+        public async Task<IActionResult> Update(CarAd carAd)
         {
             string json = HttpContext.Session.GetString("SearchResults");
             if (json != null)
@@ -49,11 +49,21 @@ namespace PolskaPaliwo.Controllers
                 {
                     searchResults[index] = carAd;
                 }
-
-                HttpContext.Session.SetString("SearchResults", JsonConvert.SerializeObject(searchResults));
                 _carAdRepository.UpdateCarAd(carAd);
 
-                return View("SearchResultsView", searchResults);
+                ViewBag.SearchResults = searchResults; //first viewbag
+                HttpContext.Session.SetString("SearchResults", JsonConvert.SerializeObject(searchResults));
+
+                var userId = _userManager.GetUserId(this.User);
+                if (userId != null)
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+                    List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
+                    ViewBag.RecommendedAds = recommendedAds; //second viewbag
+                    return RedirectToAction("ResultsForPrevious");
+                }
+
+                return RedirectToAction("ResultsForPrevious");
             }
             return View("Index");
         }
