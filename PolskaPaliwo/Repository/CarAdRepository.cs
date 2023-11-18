@@ -314,7 +314,9 @@ namespace PolskaPaliwo.Repository
         //A user korabbi hirdetéseiből kinyeri milyen featureöket tartalmaz, majd kiszámítja rá a TF-et
         private Dictionary<string, double> CalculateTFInCarAds(List<CarAd> carAds) //paraméterként kapja a user korábbi kereséseit
         {
+            carAds.RemoveAll(item => item == null);
             Dictionary<string, int> featureCounts = new Dictionary<string, int>();
+
 
             foreach (var carAd in carAds)
             {

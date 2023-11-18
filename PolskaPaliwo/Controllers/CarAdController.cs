@@ -124,7 +124,6 @@ namespace PolskaPaliwo.Controllers
         }
 
 
-
         [HttpGet]
         public IActionResult DeleteToGenerateForm(string id)
         {
@@ -133,18 +132,33 @@ namespace PolskaPaliwo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             string json = HttpContext.Session.GetString("SearchResults");
             if (json != null)
             {
                 List<CarAd> searchResults = JsonConvert.DeserializeObject<List<CarAd>>(json);
                 searchResults.Remove(searchResults.Where(x => x.Id == id).First());
-
-                HttpContext.Session.SetString("SearchResults", JsonConvert.SerializeObject(searchResults));
                 _carAdRepository.DeleteCarAd(id);
 
-                return View("SearchResultsView", searchResults);
+                ViewBag.SearchResults = searchResults; //first viewbag
+                HttpContext.Session.SetString("SearchResults", JsonConvert.SerializeObject(searchResults));
+
+                var userId = _userManager.GetUserId(this.User);
+                if (userId != null)
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+                    var ids = user.PreviousIds.Split(',').ToList();
+                    ids.RemoveAll(item => item == id); // Remove the item from the list using RemoveAll
+
+                    string previousIds = string.Join(",", ids); // Reconstruct the string
+
+                    List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, previousIds);
+                    ViewBag.RecommendedAds = recommendedAds; //second viewbag
+                    return RedirectToAction("ResultsForPrevious");
+                }
+
+                return RedirectToAction("ResultsForPrevious");
             }
             return RedirectToAction("Index");
         }
@@ -187,6 +201,7 @@ namespace PolskaPaliwo.Controllers
         }
 
 
+
         [HttpGet]
         public async Task<IActionResult> ResultsForPrevious()
         {
@@ -209,23 +224,6 @@ namespace PolskaPaliwo.Controllers
             }
             return View("Index");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
