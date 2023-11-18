@@ -1,19 +1,13 @@
-﻿
-/* FOR CREATE FORM */
+﻿/* FOR CREATE FORM */
 /* Style for the form container */
 .custom-form {
-    width: 400px; /* Adjust the width as needed */
+    width: 700px; /* Adjust the width as needed */
     margin: 0 auto; /* Center the form on the page */
     padding: 20px;
     border: 2px solid #ccc;
     border-radius: 10px; /* Curved border */
 }
 
-/* Style for form labels */
-.custom-form label {
-    display: block;
-    margin-bottom: 5px;
-}
 
 /* Style for form inputs */
 .custom-form input[type="text"],
@@ -27,31 +21,18 @@
     border-radius: 5px;
 }
 
-/* Style for form buttons */
-.custom-form input[type="submit"],
-.custom-form button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-}
-
-.custom-form input[type="submit"]:hover,
-.custom-form button:hover {
-    background-color: #0056b3;
-}
-
 
 /* Container for the row */
 .row {
-    display: flex; /* Use flexbox to create a row */
-    justify-content: space-between; /* Align items with space between them */
+    display: flex;
+    justify-content: space-between;
+    width: 104%; /* same width as Features */
+    flex-wrap: wrap;
+    gap: 15px; /* gap between columns */
+    margin-bottom: 10px; /* vertical space */
 }
 
 /* Individual columns */
 .column {
-    flex: 1; /* Each column takes an equal portion of the available space */
-    /* Add other styling for columns as needed */
+    width: calc(33% - 20px);
 }

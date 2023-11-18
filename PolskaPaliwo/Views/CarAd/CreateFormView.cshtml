@@ -145,17 +145,19 @@
                     </div>
                 </div>
 
-                <div class="column">
-                    <label asp-for="Features" class="control-label"></label>
-                    <input asp-for="Features" class="form-control" />
-                    <span asp-validation-for="Features" class="text-danger"></span>
-                </div>
-                <hr class="custom-hr" />
-                <div class="column">
-                    <input type="submit" value="Create" class="btn btn-success" />
-                    <a asp-controller="Home" asp-action="Index">
-                        <button type="button" class="btn btn-primary">Back to Home Page</button>
-                    </a>
+                    <div>
+                        <label asp-for="Features" class="control-label"></label>
+                        <input asp-for="Features" class="form-control" />
+                        <span asp-validation-for="Features" class="text-danger"></span>
+                    </div>
+                <div class="row">
+                    <hr class="custom-hr" />
+                    <div>
+                        <input type="submit" value="Create" class="btn btn-success" />
+                        <a asp-controller="Home" asp-action="Index">
+                            <button type="button" class="btn btn-primary">Back to Home Page</button>
+                        </a>
+                    </div>
                 </div>
             </form>
        
