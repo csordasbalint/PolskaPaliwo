@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations;
 
 namespace PolskaPaliwo.Models
 {
@@ -9,9 +10,11 @@ namespace PolskaPaliwo.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+
         public string? ContentType { get; set; }
         public byte[]? Data { get; set; }
 
+        [Required(ErrorMessage = "Price is required")]
         public string Price { get; set; }
         public string Currency { get; set; }
         public string Condition { get; set; }

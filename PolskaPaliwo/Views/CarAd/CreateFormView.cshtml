@@ -9,12 +9,6 @@
 
 <h1>Create a new advertisement, with filling the blank fields!</h1>
 
-@*tmp for testing*@
-<a asp-controller="CarAd" asp-action="Recommendation">
-    <button type="button" class="btn btn-primary">Testing button</button>
-</a>
-
-
 <hr class="custom-hr" />
     <div class="custom-form">
             <form asp-action="Create" method="post" enctype="multipart/form-data">
@@ -27,7 +21,7 @@
                     </div>
                     <div class="column">
                         <label asp-for="Price" class="control-label"></label>
-                        <input asp-for="Price" class="form-control" />
+                        <input asp-for="Price" class="form-control"/>
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
                     <div class="column">
@@ -40,7 +34,10 @@
                 <div class="row">
                     <div class="column">
                         <label asp-for="Condition" class="control-label"></label>
-                        <input asp-for="Condition" class="form-control" />
+                        <select asp-for="Condition" class="form-control">
+                            <option value="New">New</option>
+                            <option value="Used">Used</option>
+                        </select>
                         <span asp-validation-for="Condition" class="text-danger"></span>
                     </div>
                     <div class="column">
@@ -81,12 +78,21 @@
                     </div>
                     <div class="column">
                         <label asp-for="FuelType" class="control-label"></label>
-                        <input asp-for="FuelType" class="form-control" />
+                        <select asp-for="FuelType" class="form-control">
+                            <option value="Diesel">Diesel</option>
+                            <option value="Gasoline">Gasoline</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Electric">Electric</option>
+                        </select>
                         <span asp-validation-for="FuelType" class="text-danger"></span>
                     </div>
                     <div class="column">
                         <label asp-for="Drive" class="control-label"></label>
-                        <input asp-for="Drive" class="form-control" />
+                        <select asp-for="Drive" class="form-control">
+                            <option value="4x4">4x4</option>
+                            <option value="Front wheels">Front wheels</option>
+                            <option value="Rear wheels">Rear wheels</option>
+                        </select>
                         <span asp-validation-for="Drive" class="text-danger"></span>
                     </div>
                 </div>
@@ -94,7 +100,10 @@
                 <div class="row">
                     <div class="column">
                         <label asp-for="Transmission" class="control-label"></label>
-                        <input asp-for="Transmission" class="form-control" />
+                        <select asp-for="Transmission" class="form-control">
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual">Manual</option>
+                        </select>
                         <span asp-validation-for="Transmission" class="text-danger"></span>
                     </div>
                     <div class="column">
@@ -122,7 +131,10 @@
                     </div>
                     <div class="column">
                         <label asp-for="FirstOwner" class="control-label"></label>
-                        <input asp-for="FirstOwner" class="form-control" />
+                        <select asp-for="FirstOwner" class="form-control">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
                         <span asp-validation-for="FirstOwner" class="text-danger"></span>
                     </div>
                 </div>
