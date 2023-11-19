@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PolskaPaliwo.Models;
 using PolskaPaliwo.Repository;
 using System.Diagnostics;
@@ -23,7 +24,7 @@ namespace PolskaPaliwo.Controllers
             return View(carAds);
         }
 
-
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
