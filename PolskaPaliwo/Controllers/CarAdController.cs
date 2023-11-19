@@ -257,5 +257,20 @@ namespace PolskaPaliwo.Controllers
             return Index();
         }
 
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> UserListings()
+        {
+            var userId = _userManager.GetUserId(this.User);
+            if (userId != null)
+            {
+                var userAds = _carAdRepository.GetAllCarAds().Where(x => x.CreatorId == userId);
+                return View("UserListingsView", userAds);
+            }
+
+            return RedirectToAction("Index","Home");
+        }
     }
 }

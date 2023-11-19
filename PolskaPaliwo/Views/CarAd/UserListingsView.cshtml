@@ -1,0 +1,31 @@
+﻿@model IEnumerable<PolskaPaliwo.Models.CarAd>
+
+@{
+    ViewData["Title"] = "UserListingsView";
+}
+
+<link rel="stylesheet" href="~/css/EveryAdvertisementDisplaycss.css"/>
+
+<h1>Personal Listings</h1>
+
+<div>
+    <hr class="custom-hr" />
+    <h3>Car Advertisements</h3>
+    <ul class="ad-container">
+        @foreach (var carAd in Model)
+        {
+            <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromHome"})" class="ad-link">
+            <li class="advertisement">
+                <img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />
+                <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
+                <div class="ad-content">
+                    <p>Price: @carAd.Price @carAd.Currency</p>
+                    <p>Year: @carAd.ProductionYear</p>
+                    <p>Condition: @carAd.Condition</p>
+                    <p>Mileage: @carAd.Mileage miles</p>
+                </div>
+            </li>
+            </a>
+        }
+    </ul>
+</div>
