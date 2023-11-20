@@ -3,148 +3,164 @@
 }
 
 <link rel="stylesheet" href="~/css/EveryAdvertisementDisplaycss.css"/>
+<link rel="stylesheet" href="~/css/CustomForm.css" />
 
-<div class="text-center">
-    <div class="row">
 
+<div class="custom-form">
     <h1 class="display-4">Welcome to PolskaPaliwo!</h1>
- 
-    @*input form for searching*@
+    <hr class="custom-hr" />
+
     <form method="post" asp-controller="CarAd"  asp-action="SearchForCarAds">
-        <div class="form-group col-md-4">
-            <label for="price">Price range:</label>
-            <input type="text" id="price" name="Price" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+        <div class="row">
+            <div class="column">
+                <label for="price">Price range:</label>
+                <input type="text" id="price" name="Price" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+            </div>
+
+            <div class="column">
+                <label for="currency">Currency:</label>
+                <input type="text" id="currency" name="Currency" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="condition">Condition:</label>
+                <input type="text" id="condition" name="Condition" class="form-control"/>
+            </div>
         </div>
 
-        <div class="form-group col-md-4">
-            <label for="currency">Currency:</label>
-            <input type="text" id="currency" name="Currency" class="form-control"/>
+        <div class="row">
+            <div class="column">
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="Brand" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="Model" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="productionYear">Year Range:</label>
+                    <input type="text" id="productionYear" name="ProductionYear" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+            </div>
         </div>
 
-        <div class="form-group col-md-4">
-            <label for="condition">Condition:</label>
-            <input type="text" id="condition" name="Condition" class="form-control"/>
+        <div class="row">
+            <div class="column">
+                <label for="mileage">Mileage:</label>
+                <input type="text" id="mileage" name="Mileage" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+            </div>
+
+            <div class="column">
+                <label for="power">Power:</label>
+                <input type="text" id="power" name="Power" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+            </div>
+
+            <div class="column">
+                <label for="engineSize">Engine Size:</label>
+                <input type="text" id="engineSize" name="EngineSize" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+            </div>
         </div>
 
-        <div class="form-group col-md-4">
-            <label for="brand">Brand:</label>
-            <input type="text" id="brand" name="Brand" class="form-control"/>
+        <div class="row">
+            <div class="column">
+                <label for="fuelType">Fuel Type:</label>
+                <input type="text" id="fuelType" name="FuelType" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="drive">Drive:</label>
+                <input type="text" id="drive" name="Drive" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="transmission">Transmission:</label>
+                <input type="text" id="transmission" name="Transmission" class="form-control"/>
+            </div>
         </div>
 
-        <div class="form-group col-md-4">
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="Model" class="form-control"/>
+        <div class="row">
+            <div class="column">
+                <label for="type">Type:</label>
+                <input type="text" id="type" name="Type" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="doorsNumber">Number of Doors:</label>
+                <input type="text" id="doorsNumber" name="DoorsNumber" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+            </div>
+
+            <div class="column">
+                <label for="colour">Color:</label>
+                <input type="text" id="colour" name="Colour" class="form-control"/>
+            </div>
         </div>
 
-        <div class="form-group col-md-4">
-            <label for="productionYear">Year Range:</label>
-             <input type="text" id="productionYear" name="ProductionYear" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+        <div class="row">
+            <div class="column">
+                <label for="originCountry">Origin Country:</label>
+                <input type="text" id="originCountry" name="OriginCountry" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="firstOwner">First Owner:</label>
+                <input type="text" id="firstOwner" name="FirstOwner" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="registrationYear">Registration Year:</label>
+                <input type="text" id="registrationYear" name="RegistrationYear" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+            </div>
         </div>
 
-        <div class="form-group col-md-4">
-            <label for="mileage">Mileage:</label>
-            <input type="text" id="mileage" name="Mileage" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
+        <div class="row">
+            <div class="column">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="Location" class="form-control"/>
+            </div>
+
+            <div class="column">
+                <label for="telephone">Telephone:</label>
+                    <input type="text" id="telephone" name="Price" class="form-control" />
+            </div>
         </div>
 
-        <div class="form-group col-md-4">
-            <label for="power">Power:</label>
-            <input type="text" id="power" name="Power" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="engineSize">Engine Size:</label>
-            <input type="text" id="engineSize" name="EngineSize" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="fuelType">Fuel Type:</label>
-            <input type="text" id="fuelType" name="FuelType" class="form-control"/>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="drive">Drive:</label>
-            <input type="text" id="drive" name="Drive" class="form-control"/>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="transmission">Transmission:</label>
-            <input type="text" id="transmission" name="Transmission" class="form-control"/>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="type">Type:</label>
-            <input type="text" id="type" name="Type" class="form-control"/>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="doorsNumber">Number of Doors:</label>
-            <input type="text" id="doorsNumber" name="DoorsNumber" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="colour">Color:</label>
-            <input type="text" id="colour" name="Colour" class="form-control"/>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="originCountry">Origin Country:</label>
-            <input type="text" id="originCountry" name="OriginCountry" class="form-control"/>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="firstOwner">First Owner:</label>
-            <input type="text" id="firstOwner" name="FirstOwner" class="form-control"/>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="registrationYear">Registration Year:</label>
-            <input type="text" id="registrationYear" name="RegistrationYear" class="form-control" placeholder="Enter range like 'MIN-MAX'" />
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="Location" class="form-control"/>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="telephone">Telephone:</label>
-                <input type="text" id="telephone" name="Price" class="form-control" />
-        </div>
-
-        <div class="form-group col-md-4">
+        <div>
             <label for="features">Features:</label>
             <input type="text" id="features" name="Features" class="form-control" placeholder="Feature 1, Feature 2, Feature 3" />
             <small class="form-text text-muted">Enter features separated by commas (e.g., Feature 1, Feature 2, Feature 3).</small>
         </div>
+        
+        <hr class="custom-hr" />
+
+        <div class="text-center mt-3">
             <button type="submit" class="btn btn-primary" style="margin-bottom: 20px">Search</button>
-    </form>
-
-
-    @*listing every car advertisement under the search form*@
-        <div>
-            <hr class="custom-hr" />
-            <h3>Car Advertisements</h3>
-            <ul class="ad-container">
-                @foreach (var carAd in Model)
-                {
-                    <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromHome"})" class="ad-link">
-                        <li class="advertisement">
-                            @*<img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />*@
-                            <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
-                            <div class="ad-content">
-                                <p>Price: @carAd.Price @carAd.Currency</p>
-                                <p>Year: @carAd.ProductionYear</p>
-                                <p>Condition: @carAd.Condition</p>
-                                <p>Mileage: @carAd.Mileage miles</p>
-                            </div>
-                        </li>
-                    </a>
-                }
-            </ul>
         </div>
 
+    </form>
+</div>
 
+</br>
 
-
-    </div>
+@*listing every car advertisement under the search form*@
+<div class="text-center">
+    <hr class="custom-hr" />
+    <h2>Car Advertisements</h2>
+    <ul class="ad-container">
+        @foreach (var carAd in Model)
+        {
+            <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromHome"})" class="ad-link">
+            <li class="advertisement">
+                @*<img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />*@
+                <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
+                <div class="ad-content">
+                    <p>Price: @carAd.Price @carAd.Currency</p>
+                    <p>Year: @carAd.ProductionYear</p>
+                    <p>Condition: @carAd.Condition</p>
+                    <p>Mileage: @carAd.Mileage miles</p>
+                </div>
+            </li>
+            </a>
+        }
+    </ul>
 </div>
