@@ -10,167 +10,174 @@
 <h1>Create a new advertisement, with filling the blank fields!</h1>
 
 <hr class="custom-hr" />
-    <div class="custom-form">
-            <form asp-action="Create" method="post" enctype="multipart/form-data">
-                <div class="row">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="column">
-                        <label asp-for="ContentType" class="control-label"></label>
-                        <input asp-for="ContentType" class="form-control" />
-                        <input type="file" name="picturedata" class="btn btn-primary"/>
-                    </div>
-                    <div class="column">
-                        <label asp-for="Price" class="control-label"></label>
-                        <input asp-for="Price" class="form-control"/>
-                        <span asp-validation-for="Price" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="Currency" class="control-label"></label>
-                        <input asp-for="Currency" class="form-control" />
-                        <span asp-validation-for="Currency" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="column">
-                        <label asp-for="Condition" class="control-label"></label>
-                        <select asp-for="Condition" class="form-control">
-                            <option value="New">New</option>
-                            <option value="Used">Used</option>
-                        </select>
-                        <span asp-validation-for="Condition" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="Brand" class="control-label"></label>
-                        <input asp-for="Brand" class="form-control" />
-                        <span asp-validation-for="Brand" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="Model" class="control-label"></label>
-                        <input asp-for="Model" class="form-control" />
-                        <span asp-validation-for="Model" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row">
+<div class="custom-form">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="column">
-                    <label asp-for="ProductionYear" class="control-label"></label>
-                    <input asp-for="ProductionYear" class="form-control" />
-                    <span asp-validation-for="ProductionYear" class="text-danger"></span>
+                    <label asp-for="ContentType" class="control-label"></label>
+                    <input asp-for="ContentType" class="form-control" />
+                    <input type="file" name="picturedata" class="btn btn-primary"/>
                 </div>
                 <div class="column">
-                    <label asp-for="Mileage" class="control-label"></label>
-                    <input asp-for="Mileage" class="form-control" />
-                    <span asp-validation-for="Mileage" class="text-danger"></span>
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control"/>
+                    <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
                 <div class="column">
-                    <label asp-for="Power" class="control-label"></label>
-                    <input asp-for="Power" class="form-control" />
-                    <span asp-validation-for="Power" class="text-danger"></span>
+                    <label asp-for="Currency" class="control-label"></label>
+                    <input asp-for="Currency" class="form-control" />
+                    <span asp-validation-for="Currency" class="text-danger"></span>
                 </div>
-                </div>
+            </div>
 
-                <div class="row">
-                    <div class="column">
-                        <label asp-for="EngineSize" class="control-label"></label>
-                        <input asp-for="EngineSize" class="form-control" />
-                        <span asp-validation-for="EngineSize" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="FuelType" class="control-label"></label>
-                        <select asp-for="FuelType" class="form-control">
-                            <option value="Diesel">Diesel</option>
-                            <option value="Gasoline">Gasoline</option>
-                            <option value="Hybrid">Hybrid</option>
-                            <option value="Electric">Electric</option>
-                        </select>
-                        <span asp-validation-for="FuelType" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="Drive" class="control-label"></label>
-                        <select asp-for="Drive" class="form-control">
-                            <option value="4x4">4x4</option>
-                            <option value="Front wheels">Front wheels</option>
-                            <option value="Rear wheels">Rear wheels</option>
-                        </select>
-                        <span asp-validation-for="Drive" class="text-danger"></span>
-                    </div>
+            <div class="row">
+                <div class="column">
+                    <label asp-for="Condition" class="control-label"></label>
+                    <select asp-for="Condition" class="form-control">
+                        <option value="New">New</option>
+                        <option value="Used">Used</option>
+                    </select>
+                    <span asp-validation-for="Condition" class="text-danger"></span>
                 </div>
+                <div class="column">
+                    <label asp-for="Brand" class="control-label"></label>
+                    <input asp-for="Brand" class="form-control" />
+                    <span asp-validation-for="Brand" class="text-danger"></span>
+                </div>
+                <div class="column">
+                    <label asp-for="Model" class="control-label"></label>
+                    <input asp-for="Model" class="form-control" />
+                    <span asp-validation-for="Model" class="text-danger"></span>
+                </div>
+            </div>
 
-                <div class="row">
-                    <div class="column">
-                        <label asp-for="Transmission" class="control-label"></label>
-                        <select asp-for="Transmission" class="form-control">
-                            <option value="Automatic">Automatic</option>
-                            <option value="Manual">Manual</option>
-                        </select>
-                        <span asp-validation-for="Transmission" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="Type" class="control-label"></label>
-                        <input asp-for="Type" class="form-control" />
-                        <span asp-validation-for="Type" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="DoorsNumber" class="control-label"></label>
-                        <input asp-for="DoorsNumber" class="form-control" />
-                        <span asp-validation-for="DoorsNumber" class="text-danger"></span>
-                    </div>
-                </div>
+            <div class="row">
+            <div class="column">
+                <label asp-for="ProductionYear" class="control-label"></label>
+                <input asp-for="ProductionYear" class="form-control" />
+                <span asp-validation-for="ProductionYear" class="text-danger"></span>
+            </div>
+            <div class="column">
+                <label asp-for="Mileage" class="control-label"></label>
+                <input asp-for="Mileage" class="form-control" />
+                <span asp-validation-for="Mileage" class="text-danger"></span>
+            </div>
+            <div class="column">
+                <label asp-for="Power" class="control-label"></label>
+                <input asp-for="Power" class="form-control" />
+                <span asp-validation-for="Power" class="text-danger"></span>
+            </div>
+            </div>
 
-                <div class="row">
-                    <div class="column">
-                        <label asp-for="Colour" class="control-label"></label>
-                        <input asp-for="Colour" class="form-control" />
-                        <span asp-validation-for="Colour" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="OriginCountry" class="control-label"></label>
-                        <input asp-for="OriginCountry" class="form-control" />
-                        <span asp-validation-for="OriginCountry" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="FirstOwner" class="control-label"></label>
-                        <select asp-for="FirstOwner" class="form-control">
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                        <span asp-validation-for="FirstOwner" class="text-danger"></span>
-                    </div>
+            <div class="row">
+                <div class="column">
+                    <label asp-for="EngineSize" class="control-label"></label>
+                    <input asp-for="EngineSize" class="form-control" />
+                    <span asp-validation-for="EngineSize" class="text-danger"></span>
                 </div>
+                <div class="column">
+                    <label asp-for="FuelType" class="control-label"></label>
+                    <select asp-for="FuelType" class="form-control">
+                        <option value="Diesel">Diesel</option>
+                        <option value="Gasoline">Gasoline</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="Electric">Electric</option>
+                    </select>
+                    <span asp-validation-for="FuelType" class="text-danger"></span>
+                </div>
+                <div class="column">
+                    <label asp-for="Drive" class="control-label"></label>
+                    <select asp-for="Drive" class="form-control">
+                        <option value="4x4">4x4</option>
+                        <option value="Front wheels">Front wheels</option>
+                        <option value="Rear wheels">Rear wheels</option>
+                    </select>
+                    <span asp-validation-for="Drive" class="text-danger"></span>
+                </div>
+            </div>
 
-                <div class="row">
-                    <div class="column">
-                        <label asp-for="RegistrationYear" class="control-label"></label>
-                        <input asp-for="RegistrationYear" class="form-control" />
-                        <span asp-validation-for="RegistrationYear" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="Location" class="control-label"></label>
-                        <input asp-for="Location" class="form-control" />
-                        <span asp-validation-for="Location" class="text-danger"></span>
-                    </div>
-                    <div class="column">
-                        <label asp-for="Telephone" class="control-label"></label>
-                        <input asp-for="Telephone" class="form-control" />
-                        <span asp-validation-for="Telephone" class="text-danger"></span>
-                    </div>
+            <div class="row">
+                <div class="column">
+                    <label asp-for="Transmission" class="control-label"></label>
+                    <select asp-for="Transmission" class="form-control">
+                        <option value="Automatic">Automatic</option>
+                        <option value="Manual">Manual</option>
+                    </select>
+                    <span asp-validation-for="Transmission" class="text-danger"></span>
                 </div>
+                <div class="column">
+                    <label asp-for="Type" class="control-label"></label>
+                    <input asp-for="Type" class="form-control" />
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+                <div class="column">
+                    <label asp-for="DoorsNumber" class="control-label"></label>
+                    <input asp-for="DoorsNumber" class="form-control" />
+                    <span asp-validation-for="DoorsNumber" class="text-danger"></span>
+                </div>
+            </div>
 
-                    <div>
-                        <label asp-for="Features" class="control-label"></label>
-                        <input asp-for="Features" class="form-control" />
-                        <span asp-validation-for="Features" class="text-danger"></span>
-                    </div>
-                <div class="row">
-                    <hr class="custom-hr" />
-                    <div>
-                        <input type="submit" value="Create" class="btn btn-success" />
-                        <a asp-controller="Home" asp-action="Index">
-                            <button type="button" class="btn btn-primary">Back to Home Page</button>
-                        </a>
-                    </div>
+            <div class="row">
+                <div class="column">
+                    <label asp-for="Colour" class="control-label"></label>
+                    <input asp-for="Colour" class="form-control" />
+                    <span asp-validation-for="Colour" class="text-danger"></span>
                 </div>
-            </form>
-       
-    </div>
+                <div class="column">
+                    <label asp-for="OriginCountry" class="control-label"></label>
+                    <input asp-for="OriginCountry" class="form-control" />
+                    <span asp-validation-for="OriginCountry" class="text-danger"></span>
+                </div>
+                <div class="column">
+                    <label asp-for="FirstOwner" class="control-label"></label>
+                    <select asp-for="FirstOwner" class="form-control">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <span asp-validation-for="FirstOwner" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <label asp-for="RegistrationYear" class="control-label"></label>
+                    <input asp-for="RegistrationYear" class="form-control" />
+                    <span asp-validation-for="RegistrationYear" class="text-danger"></span>
+                </div>
+                <div class="column">
+                    <label asp-for="Location" class="control-label"></label>
+                    <input asp-for="Location" class="form-control" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+                <div class="column">
+                    <label asp-for="Telephone" class="control-label"></label>
+                    <input asp-for="Telephone" class="form-control" />
+                    <span asp-validation-for="Telephone" class="text-danger"></span>
+                </div>
+            </div>
+
+                <div>
+                    <label asp-for="Features" class="control-label"></label>
+                    <input asp-for="Features" class="form-control" />
+                    <span asp-validation-for="Features" class="text-danger"></span>
+                </div>
+            <div class="row">
+                <hr class="custom-hr" />
+                <div>
+                    <input type="submit" value="Create" class="btn btn-success" />
+                    <a asp-controller="Home" asp-action="Index">
+                        <button type="button" class="btn btn-primary">Back to Home Page</button>
+                    </a>
+                </div>
+            </div>
+        </form>
+
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
