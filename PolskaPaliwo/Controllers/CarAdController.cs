@@ -260,6 +260,7 @@ namespace PolskaPaliwo.Controllers
 
 
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> UserListings()
         {
