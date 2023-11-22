@@ -29,5 +29,41 @@ namespace Testing
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
+
+
+        
+
+        [Fact]
+        public async Task CarAd_CreateToGenerateForm_ReturnsRedirect()
+        {
+            // Act
+            var response = await _client.GetAsync("/CarAd/CreateToGenerateForm");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+        }
+
+
+        [Fact]
+        public async Task CarAd_UpdateToGenerateForm_ReturnsOK()
+        {
+            // Act
+            var response = await _client.GetAsync("/CarAd/UpdateToGenerateForm");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+
+
+        [Fact]
+        public async Task CarAd_DeleteToGenerateForm_ReturnsOK()
+        {
+            // Act
+            var response = await _client.GetAsync("/CarAd/DeleteToGenerateForm");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }
