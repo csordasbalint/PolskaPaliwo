@@ -1,0 +1,9 @@
+﻿/* Hide checkbox */
+#toggleRecommendedAds {
+    display: none;
+}
+
+/* Hide recommended ads section when checkbox is checked */
+#toggleRecommendedAds:checked ~ #recommendedAdsSection {
+    display: none;
+}

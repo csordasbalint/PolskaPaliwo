@@ -9,6 +9,9 @@
     ViewData["Title"] = "SearchResultsView";
 }
 
+<link rel="stylesheet" href="~/css/EveryAdvertisementDisplaycss.css" />
+<link rel="stylesheet" href="~/css/HideAndShowcss.css" />
+
 <h1>Search result list</h1>
 
 <p>
@@ -163,29 +166,35 @@
 }
 
 
-@if (recommendedAds != null && recommendedAds.Any())
-{
-    <div>
-        <hr class="custom-hr" />
-        <h3>Recommended advertisements</h3>
-        <ul class="ad-container">
-            @foreach (var carAd in recommendedAds)
-            {
-                <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromSearch"})" class="ad-link">
-                <li class="advertisement">
-                        @*<img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />*@
-                    <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
-                    <div class="ad-content">
-                        <p>Price: @carAd.Price @carAd.Currency</p>
-                        <p>Year: @carAd.ProductionYear</p>
-                        <p>Condition: @carAd.Condition</p>
-                        <p>Mileage: @carAd.Mileage miles</p>
-                    </div>
-                </li>
-                </a>
-            }
-        </ul>
-        <hr class="custom-hr" />
-    </div>
-}
+
+<input type="checkbox" id="toggleRecommendedAds" style="display: none;">
+<label for="toggleRecommendedAds">Hide recommendations</label>
+
+<div id="recommendedAdsSection">
+    @if (recommendedAds != null && recommendedAds.Any())
+    {
+        <div>
+            <hr class="custom-hr" />
+            <h3>Recommended advertisements</h3>
+            <ul class="ad-container">
+                @foreach (var carAd in recommendedAds)
+                {
+                    <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromSearch"})" class="ad-link">
+                    <li class="advertisement">
+                            @*<img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />*@
+                        <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
+                        <div class="ad-content">
+                            <p>Price: @carAd.Price @carAd.Currency</p>
+                            <p>Year: @carAd.ProductionYear</p>
+                            <p>Condition: @carAd.Condition</p>
+                            <p>Mileage: @carAd.Mileage miles</p>
+                        </div>
+                    </li>
+                    </a>
+                }
+            </ul>
+            <hr class="custom-hr" />
+        </div>
+    }
+</div>
 
