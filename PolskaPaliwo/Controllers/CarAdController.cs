@@ -262,7 +262,7 @@ namespace PolskaPaliwo.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> UserListings()
+        public IActionResult UserListings()
         {
             var userId = _userManager.GetUserId(this.User);
             if (userId != null)
@@ -271,7 +271,7 @@ namespace PolskaPaliwo.Controllers
                 return View("UserListingsView", userAds);
             }
 
-            return RedirectToAction("Index","Home");
+            return View("Index","Home");
         }
     }
 }
