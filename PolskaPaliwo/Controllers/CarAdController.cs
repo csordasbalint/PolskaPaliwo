@@ -31,7 +31,7 @@ namespace PolskaPaliwo.Controllers
 
 
 
-
+        [Authorize]
         [HttpGet]
         public IActionResult UpdateToGenerateForm(string id)
         {
@@ -73,7 +73,7 @@ namespace PolskaPaliwo.Controllers
 
 
 
-
+        [Authorize]
         [HttpGet]
         public IActionResult DeleteToGenerateForm(string id)
         {
