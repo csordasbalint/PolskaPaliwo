@@ -139,5 +139,24 @@ namespace Testing
             Assert.Equal(HttpStatusCode.Redirect, response.StatusCode); //302 - redirect code
             Assert.Contains(expectedRedirectUrl, redirectedUrl); //asks for login
         }
+
+
+
+        [Fact]
+        public async Task UnauthenticatedUser_CannotAccessPrivacy()
+        {
+            // Arrange
+            // Not needed - any request sent by _client is unauthentication on default
+
+            // Act
+            var response = await _client.GetAsync("/Home/Privacy");
+            var expectedRedirectUrl = "/Identity/Account/Login";
+            var redirectedUrl = response.Headers.Location?.OriginalString;
+
+            // Assert
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode); //302 - redirect code
+            Assert.Contains(expectedRedirectUrl, redirectedUrl); //asks for login
+        }
+
     }
 }
