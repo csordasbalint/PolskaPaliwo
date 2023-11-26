@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using MimeKit;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using PolskaPaliwo.Models;
@@ -127,14 +128,19 @@ namespace PolskaPaliwo.Controllers
         [HttpPost]
         public IActionResult Create(CarAd carAd, IFormFile pictureData)
         {
-            using (var stream = pictureData.OpenReadStream())
+            if (pictureData != null && pictureData.Length > 0)
             {
-                byte[] buffer = new byte[pictureData.Length];
-                stream.Read(buffer, 0, (int)pictureData.Length);
+                using (var stream = pictureData.OpenReadStream())
+                {
+                    byte[] buffer = new byte[pictureData.Length];
+                    stream.Read(buffer, 0, (int)pictureData.Length);
 
-                carAd.Data = buffer;
-                carAd.ContentType = pictureData.ContentType;
+                    carAd.Data = buffer;
+                    string detectedContentType = MimeTypes.GetMimeType(pictureData.FileName);
+                    carAd.ContentType = detectedContentType ?? pictureData.ContentType;
+                }
             }
+                
 
             carAd.CreatorId = _userManager.GetUserId(this.User);
             _carAdRepository.CreateCarAd(carAd);

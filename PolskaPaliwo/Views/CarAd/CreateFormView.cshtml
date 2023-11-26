@@ -12,13 +12,12 @@
 <hr class="custom-hr" />
 <div class="custom-form">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div>
+                <input type="file" name="picturedata" class="btn btn-primary" />
+            </div>
+
             <div class="row">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="column">
-                    <label asp-for="ContentType" class="control-label"></label>
-                    <input asp-for="ContentType" class="form-control" />
-                    <input type="file" name="picturedata" class="btn btn-primary"/>
-                </div>
                 <div class="column">
                     <label asp-for="Price" class="control-label"></label>
                     <input asp-for="Price" class="form-control"/>
@@ -29,9 +28,6 @@
                     <input asp-for="Currency" class="form-control" />
                     <span asp-validation-for="Currency" class="text-danger"></span>
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="column">
                     <label asp-for="Condition" class="control-label"></label>
                     <select asp-for="Condition" class="form-control">
@@ -40,6 +36,9 @@
                     </select>
                     <span asp-validation-for="Condition" class="text-danger"></span>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="column">
                     <label asp-for="Brand" class="control-label"></label>
                     <input asp-for="Brand" class="form-control" />
@@ -50,32 +49,32 @@
                     <input asp-for="Model" class="form-control" />
                     <span asp-validation-for="Model" class="text-danger"></span>
                 </div>
+                <div class="column">
+                    <label asp-for="ProductionYear" class="control-label"></label>
+                    <input asp-for="ProductionYear" class="form-control" />
+                    <span asp-validation-for="ProductionYear" class="text-danger"></span>
+                </div>
             </div>
 
             <div class="row">
-            <div class="column">
-                <label asp-for="ProductionYear" class="control-label"></label>
-                <input asp-for="ProductionYear" class="form-control" />
-                <span asp-validation-for="ProductionYear" class="text-danger"></span>
-            </div>
-            <div class="column">
-                <label asp-for="Mileage" class="control-label"></label>
-                <input asp-for="Mileage" class="form-control" />
-                <span asp-validation-for="Mileage" class="text-danger"></span>
-            </div>
-            <div class="column">
-                <label asp-for="Power" class="control-label"></label>
-                <input asp-for="Power" class="form-control" />
-                <span asp-validation-for="Power" class="text-danger"></span>
-            </div>
-            </div>
-
-            <div class="row">
+                <div class="column">
+                    <label asp-for="Mileage" class="control-label"></label>
+                    <input asp-for="Mileage" class="form-control" />
+                    <span asp-validation-for="Mileage" class="text-danger"></span>
+                </div>
+                <div class="column">
+                    <label asp-for="Power" class="control-label"></label>
+                    <input asp-for="Power" class="form-control" />
+                    <span asp-validation-for="Power" class="text-danger"></span>
+                </div>
                 <div class="column">
                     <label asp-for="EngineSize" class="control-label"></label>
                     <input asp-for="EngineSize" class="form-control" />
                     <span asp-validation-for="EngineSize" class="text-danger"></span>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="column">
                     <label asp-for="FuelType" class="control-label"></label>
                     <select asp-for="FuelType" class="form-control">
@@ -95,9 +94,6 @@
                     </select>
                     <span asp-validation-for="Drive" class="text-danger"></span>
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="column">
                     <label asp-for="Transmission" class="control-label"></label>
                     <select asp-for="Transmission" class="form-control">
@@ -106,6 +102,9 @@
                     </select>
                     <span asp-validation-for="Transmission" class="text-danger"></span>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="column">
                     <label asp-for="Type" class="control-label"></label>
                     <input asp-for="Type" class="form-control" />
@@ -116,14 +115,14 @@
                     <input asp-for="DoorsNumber" class="form-control" />
                     <span asp-validation-for="DoorsNumber" class="text-danger"></span>
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="column">
                     <label asp-for="Colour" class="control-label"></label>
                     <input asp-for="Colour" class="form-control" />
                     <span asp-validation-for="Colour" class="text-danger"></span>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="column">
                     <label asp-for="OriginCountry" class="control-label"></label>
                     <input asp-for="OriginCountry" class="form-control" />
@@ -137,14 +136,14 @@
                     </select>
                     <span asp-validation-for="FirstOwner" class="text-danger"></span>
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="column">
                     <label asp-for="RegistrationYear" class="control-label"></label>
                     <input asp-for="RegistrationYear" class="form-control" />
                     <span asp-validation-for="RegistrationYear" class="text-danger"></span>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="column">
                     <label asp-for="Location" class="control-label"></label>
                     <input asp-for="Location" class="form-control" />
@@ -162,6 +161,7 @@
                     <input asp-for="Features" class="form-control" />
                     <span asp-validation-for="Features" class="text-danger"></span>
                 </div>
+
             <div class="row">
                 <hr class="custom-hr" />
                 <div>

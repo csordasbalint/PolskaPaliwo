@@ -163,7 +163,7 @@
         {
             <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromHome"})" class="ad-link">
             <li class="advertisement">
-                @*<img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />*@
+                <img class="ad-image" height="100" width="120" src="@Url.Action("GetImage", "CarAd", new {id = carAd.Id})" />
                 <h2 class="ad-heading">@carAd.Brand @carAd.Model</h2>
                 <div class="ad-content">
                     <p>Price: @carAd.Price @carAd.Currency</p>
