@@ -51,7 +51,7 @@ namespace Testing
             var response = await _client.GetAsync("/CarAd/UpdateToGenerateForm");
 
             // Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
         }
 
 
@@ -63,7 +63,7 @@ namespace Testing
             var response = await _client.GetAsync("/CarAd/DeleteToGenerateForm");
 
             // Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
         }
     }
 }
