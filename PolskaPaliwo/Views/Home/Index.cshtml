@@ -142,12 +142,24 @@
 
 </br>
 
+
+@{
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var pageSize = ViewBag.PageSize;
+    var carAds = ViewBag.CarAds as List<CarAd>;
+
+    int maxPagesToShow = 5; // Adjust the number of page links to show
+    int halfPagesToShow = maxPagesToShow / 2;
+}
+
+
 @*listing every car advertisement under the search form*@
 <div class="text-center">
     <hr class="custom-hr" />
     <h2>Car Advertisements</h2>
     <ul class="ad-container">
-        @foreach (var carAd in Model)
+        @foreach (var carAd in carAds)
         {
             <a href="@Url.Action("Details", "CarAd", new { id = carAd.Id, source = "fromHome"})" class="ad-link">
             <li class="advertisement">
@@ -163,4 +175,74 @@
             </a>
         }
     </ul>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+
+            <!-- Previous page link -->
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1 })" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+            <!-- Generate page links based on total pages -->
+            @if (totalPages > maxPagesToShow)
+            {
+                var startPage = Math.Max(1, currentPage - halfPagesToShow);
+                var endPage = Math.Min(startPage + maxPagesToShow - 1, totalPages);
+
+                if (endPage - startPage + 1 < maxPagesToShow)
+                {
+                    startPage = Math.Max(1, endPage - maxPagesToShow + 1);
+                }
+
+                if (startPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = 1 })">1</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                }
+
+                for (var i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(currentPage == i ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
+
+                if (endPage < totalPages)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = totalPages })">@totalPages</a>
+                    </li>
+                }
+            }
+            else
+            {
+                for (var i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(currentPage == i ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
+            }
+
+            <!-- Next page link -->
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1 })" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
 </div>

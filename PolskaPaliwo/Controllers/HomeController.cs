@@ -18,10 +18,19 @@ namespace PolskaPaliwo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
+            int pageSize = 12;
+            
             var carAds = _carAdRepository.GetAllCarAds();
-            return View(carAds);
+
+            var paginatedCarAds = carAds.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)carAds.Count / pageSize);
+            ViewBag.CarAds = paginatedCarAds;
+
+            return View();
         }
 
         [Authorize]
