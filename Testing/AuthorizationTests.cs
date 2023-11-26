@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
 using Moq;
 using PolskaPaliwo.Controllers;
@@ -140,6 +141,36 @@ namespace Testing
             Assert.Contains(expectedRedirectUrl, redirectedUrl); //asks for login
         }
 
+
+
+        [Fact]
+        public async Task AuthenticatedUser_CanAccessPrivacy()
+        {
+            // Arrange
+            var carAdRepositoryMock = new Mock<ICarAdRepository>();
+            var mockLogger = new Mock<ILogger<HomeController>>();
+
+            var controller = new HomeController(mockLogger.Object, carAdRepositoryMock.Object);
+
+            var httpContext = new DefaultHttpContext(); // Context represents an HTTP request and response.
+            httpContext.User = new ClaimsPrincipal(new ClaimsIdentity(new[] // Authenticated user with claim
+            {
+                new Claim(ClaimTypes.NameIdentifier, "testUserId"),
+            }, "mock"));
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = httpContext
+            };
+
+            // Act
+            var result = await controller.Privacy() as ViewResult; // Invoke the Privacy action asynchronously
+
+            // Assert
+            Assert.NotNull(result); // Ensure result is not null
+            Assert.IsType<ViewResult>(result); // Ensure the result is of type ViewResult
+            Assert.Equal("Privacy", result?.ViewName); // Verify that the correct view name is returned
+        }
 
 
         [Fact]
