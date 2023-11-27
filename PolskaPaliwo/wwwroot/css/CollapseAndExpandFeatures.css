@@ -1,0 +1,13 @@
+﻿/* Hide the content by default */
+.features-content div {
+    display: none;
+}
+
+.features-content.expanded div {
+    display: block;
+}
+
+/* Style for the expand button */
+.expand-btn {
+    cursor: pointer;
+}

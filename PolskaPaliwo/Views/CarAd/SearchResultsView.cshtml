@@ -11,6 +11,7 @@
 
 <link rel="stylesheet" href="~/css/EveryAdvertisementDisplaycss.css" />
 <link rel="stylesheet" href="~/css/HideAndShowcss.css" />
+<link rel="stylesheet" href="~/css/CollapseAndExpandFeatures.css" />
 
 <h1>Search result list</h1>
 
@@ -39,7 +40,7 @@
                    Model
                 </th>
                 <th>
-                   ProductionYear
+                   Production year
                 </th>
                 <th>
                    Mileage
@@ -48,10 +49,10 @@
                    Power
                 </th>
                 <th>
-                   EngineSize
+                   Engine displacement
                 </th>
                 <th>
-                   FuelType
+                   Fuel type
                 </th>
                 <th>
                    Drive
@@ -63,19 +64,19 @@
                    Type
                 </th>
                 <th>
-                   DoorsNumber
+                   Number of doors
                 </th>
                 <th>
                    Colour
                 </th>
                 <th>
-                   OriginCountry
+                   Origin country
                 </th>
                 <th>
-                   FirstOwner
+                   First owner
                 </th>
                 <th>
-                   RegistrationYear
+                   Registration year
                 </th>
                 <th>
                    Location
@@ -153,8 +154,14 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Telephone)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Features)
+                    <td class="features-cell">
+                        <div class="features-content hidden">
+                            @foreach (var feature in item.Features)
+                            {
+                                <div>@feature</div>
+                            }
+                        </div>
+                        <button class="expand-btn">Expand</button>
                     </td>
                     <td>
                         <a href="@Url.Action("Details", "Carad", new { id = item.Id, source = "fromSearch" })" class="btn btn-primary">Details</a>
@@ -198,3 +205,23 @@
     }
 </div>
 
+
+
+<script>
+    // Get all expand buttons
+    const expandButtons = document.querySelectorAll('.expand-btn');
+
+    // Attach click event listeners to each expand button
+    expandButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const content = this.previousElementSibling;
+            content.classList.toggle('expanded');
+
+            if (content.classList.contains('expanded')) {
+                this.innerText = 'Collapse';
+            } else {
+                this.innerText = 'Expand';
+            }
+        });
+    });
+</script>
