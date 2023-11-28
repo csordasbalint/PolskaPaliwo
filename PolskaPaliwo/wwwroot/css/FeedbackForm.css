@@ -1,0 +1,36 @@
+﻿/* Styles for the form and buttons */
+.feedback-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* Styles for the buttons */
+.rating-button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+    .rating-button:hover {
+        background-color: #0056b3;
+    }
+
+/* Styles for the thank you message */
+#thankYouMessage {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #007bff;
+}
