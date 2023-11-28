@@ -28,9 +28,9 @@ namespace PolskaPaliwo.Controllers
                     user.LastFeedback = ratingScore;
                     await _userManager.UpdateAsync(user);
                 }
-                return Ok();
+                return NoContent();
             }
-            return Ok();
+            return BadRequest();
         }
 
     }

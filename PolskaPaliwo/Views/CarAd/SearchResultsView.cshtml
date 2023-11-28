@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="~/css/EveryAdvertisementDisplaycss.css" />
 <link rel="stylesheet" href="~/css/HideAndShowcss.css" />
 <link rel="stylesheet" href="~/css/CollapseAndExpandFeatures.css" />
+<link rel="stylesheet" href="~/css/FeedbackForm.css" />
 
 <h1>Search result list</h1>
 
@@ -207,16 +208,19 @@
 
 
 
+
+
+
 <div>
-    <h1>Feedback Scale</h1>
-    <form id="feedbackForm" method="post" asp-controller="User" asp-action="FeedbackSave">
-        <p>Please rate your experience:</p>
+    <h1 style="text-align: center;">🔵 Feedback scale 🔵</h1>
+    <form id="feedbackForm" method="post" asp-controller="User" asp-action="FeedbackSave" class="feedback-form">
+        <h3>Please rate your experience:</h3>
         <div class="rating-container">
-            <button type="submit" name="ratingScore" value="1">1</button>
-            <button type="submit" name="ratingScore" value="2">2</button>
-            <button type="submit" name="ratingScore" value="3">3</button>
-            <button type="submit" name="ratingScore" value="4">4</button>
-            <button type="submit" name="ratingScore" value="5">5</button>
+            <button type="submit" name="ratingScore" value="1" class="rating-button">1</button>
+            <button type="submit" name="ratingScore" value="2" class="rating-button">2</button>
+            <button type="submit" name="ratingScore" value="3" class="rating-button">3</button>
+            <button type="submit" name="ratingScore" value="4" class="rating-button">4</button>
+            <button type="submit" name="ratingScore" value="5" class="rating-button">5</button>
         </div>
     </form>
     <div id="thankYouMessage" style="display: none;">
