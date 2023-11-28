@@ -207,6 +207,35 @@
 
 
 
+<div>
+    <h1>Feedback Scale</h1>
+    <form id="feedbackForm" method="post" asp-controller="User" asp-action="FeedbackSave">
+        <p>Please rate your experience:</p>
+        <div class="rating-container">
+            <button type="submit" name="ratingScore" value="1">1</button>
+            <button type="submit" name="ratingScore" value="2">2</button>
+            <button type="submit" name="ratingScore" value="3">3</button>
+            <button type="submit" name="ratingScore" value="4">4</button>
+            <button type="submit" name="ratingScore" value="5">5</button>
+        </div>
+    </form>
+    <div id="thankYouMessage" style="display: none;">
+        <p>Thank you for your feedback!</p>
+    </div>
+</div>
+
+
+
+<script>
+document.getElementById("feedbackForm").addEventListener("submit", function (event) {
+    // UI changes using JavaScript after form submission
+    document.getElementById("feedbackForm").style.display = "none";
+    document.getElementById("thankYouMessage").style.display = "block";
+});
+</script>
+
+
+
 <script>
     // Get all expand buttons
     const expandButtons = document.querySelectorAll('.expand-btn');
