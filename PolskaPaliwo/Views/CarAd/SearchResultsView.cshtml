@@ -176,7 +176,7 @@
 
 
 <input type="checkbox" id="toggleRecommendedAds" style="display: none;">
-<label for="toggleRecommendedAds">Hide recommendations</label>
+<label for="toggleRecommendedAds">Turn off recommendations</label>
 
 <div id="recommendedAdsSection">
     @if (recommendedAds != null && recommendedAds.Any())
@@ -257,4 +257,41 @@ document.getElementById("feedbackForm").addEventListener("submit", function (eve
             }
         });
     });
+</script>
+
+
+<script>
+    // Retrieve the checkbox and recommended ads section
+    const toggleRecommendedAds = document.getElementById('toggleRecommendedAds');
+    const recommendedAdsSection = document.getElementById('recommendedAdsSection');
+
+    // Function to toggle the visibility of recommended ads and save state in localStorage
+    function toggleAdsVisibility() {
+        const toggleLabel = document.querySelector('label[for="toggleRecommendedAds"]');
+
+        if (toggleRecommendedAds.checked) {
+            recommendedAdsSection.style.display = 'none';
+            localStorage.setItem('adsVisibility', 'hidden');
+            toggleLabel.textContent = 'Turn on recommendations'; // Change label text
+        } else {
+            recommendedAdsSection.style.display = 'block';
+            localStorage.setItem('adsVisibility', 'visible');
+            toggleLabel.textContent = 'Turn off recommendations'; // Change label text
+        }
+    }
+
+    // Add event listener to the checkbox
+    toggleRecommendedAds.addEventListener('change', toggleAdsVisibility);
+
+    // Check if the visibility state is stored in localStorage
+    const savedVisibility = localStorage.getItem('adsVisibility');
+
+    // Set the initial visibility based on the stored state
+    if (savedVisibility === 'hidden') {
+        toggleRecommendedAds.checked = true;
+        recommendedAdsSection.style.display = 'none';
+
+        const toggleLabel = document.querySelector('label[for="toggleRecommendedAds"]');
+        toggleLabel.textContent = 'Turn on recommendations'; // Change label text
+    }
 </script>
