@@ -9,5 +9,7 @@ namespace PolskaPaliwo.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PreviousIds { get; set; }
+
+        public int LastFeedback { get; set; }
     }
 }
