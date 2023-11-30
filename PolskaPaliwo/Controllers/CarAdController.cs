@@ -176,7 +176,7 @@ namespace PolskaPaliwo.Controllers
                     {
                         user.PreviousIds += id.ToString();
                     }
-                    else if (user.PreviousIds.Count(x => x == ',') == 4)
+                    else if (user.PreviousIds.Count(x => x == ',') == 9)
                     {
                         int idx = user.PreviousIds.IndexOf(',');
                         user.PreviousIds = user.PreviousIds.Substring(idx + 1);
@@ -210,12 +210,13 @@ namespace PolskaPaliwo.Controllers
                 if (userId != null)
                 {
                     var user = await _userManager.FindByIdAsync(userId);
-
-                    List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
-                    ViewBag.RecommendedAds = recommendedAds; //second viewbag
-                    return View("SearchResultsView");
+                    if (user.PreviousIds.Count(x => x == ',') == 10)
+                    {
+                        List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
+                        ViewBag.RecommendedAds = recommendedAds; //second viewbag
+                        return View("SearchResultsView");
+                    }
                 }
-
 
                 return View("SearchResultsView");
             }
