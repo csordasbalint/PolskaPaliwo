@@ -210,7 +210,7 @@ namespace PolskaPaliwo.Controllers
                 if (userId != null)
                 {
                     var user = await _userManager.FindByIdAsync(userId);
-                    if (user.PreviousIds.Count(x => x == ',') == 10)
+                    if (user.PreviousIds != null && user.PreviousIds.Count(x => x == ',') == 10)
                     {
                         List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
                         ViewBag.RecommendedAds = recommendedAds; //second viewbag
