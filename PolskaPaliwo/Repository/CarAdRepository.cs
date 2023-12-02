@@ -142,7 +142,15 @@ namespace PolskaPaliwo.Repository
             }
 
 
-            List<CarAd> allCarAds = GetAllCarAds(); //összes hirdetés kigyűjtése db-ből
+            List<CarAd> allCarAds = GetAllCarAds(); //összes hirdetés kigyűjtése db-ből, majd history Id-k törlése
+            for (int i = allCarAds.Count -1; i>=0; i--)
+            {
+                if (carAds.Any(adToRemove => adToRemove.Id == allCarAds[i].Id))
+                {
+                    allCarAds.RemoveAt(i);
+                }
+            }
+
 
             Dictionary<string, double> similarityScores = new Dictionary<string, double>();
 
