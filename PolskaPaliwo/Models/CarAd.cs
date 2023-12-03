@@ -98,25 +98,5 @@ namespace PolskaPaliwo.Models
         [Display(Name = "Features")]
         public string[]? Features { get; set; }
         public string CreatorId { get; set; }
-
-
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
-
-            CarAd other = (CarAd)obj;
-            return Id == other.Id; // Compare based on Id
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
-
-
     }
 }
