@@ -26,8 +26,9 @@ namespace PolskaPaliwo.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var carAds = _carAdRepository.GetAllCarAds();
-            return Ok(carAds); // Return cars as JSON for testing
+            //var carAds = _carAdRepository.GetAllCarAds();
+            //return Ok(carAds); // Return cars as JSON for testing
+            return Ok();
         }
 
 
