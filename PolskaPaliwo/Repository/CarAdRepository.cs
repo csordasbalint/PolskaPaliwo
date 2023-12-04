@@ -232,6 +232,13 @@ namespace PolskaPaliwo.Repository
 
 
 
+
+            HashSet<string> uniqueRecommendedCarIds = new HashSet<string>(recommendedCars.Select(car => car.Id));
+            double coverage = Math.Round((double)uniqueRecommendedCarIds.Count / allCarAds.Count,8);
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("The COVERAGE is: " + coverage.ToString("F7"));
+            Console.WriteLine("=========================================================");
+
             
             return recommendedCars;
         }
