@@ -170,18 +170,6 @@ namespace PolskaPaliwo.Repository
 
 
 
-            //tmp kiírás egyelőre, top 10 hasonló hirdetés
-            //var top5SimilarCars = similarityScores
-            //    .OrderByDescending(kvp => kvp.Value)
-            //    .Take(10)
-            //    .ToList();
-
-            //foreach (var kvp in top5SimilarCars)
-            //{
-            //    Console.WriteLine($"CarAd ID: {kvp.Key}, Similarity score: {kvp.Value}");
-            //}
-
-
             //csak az id-k visszatérésnek
             var topXSimilarCarIds = similarityScores
                 .OrderByDescending(kvp => kvp.Value)
@@ -336,9 +324,6 @@ namespace PolskaPaliwo.Repository
                     $"Condition_{carAd.Condition}",
                     $"Year_{carAd.ProductionYear}",
                     $"Transmission_{carAd.Transmission}",
-                    $"Mileage_{carAd.Mileage}",
-                    $"Power_{carAd.Power}",
-                    $"EngineSize_{carAd.EngineSize}",
                     $"FuelType_{carAd.FuelType}",
                     $"Drive_{carAd.Drive}",
                     $"Type_{carAd.Type}",
@@ -347,6 +332,70 @@ namespace PolskaPaliwo.Repository
                     $"FirstOwner_{carAd.FirstOwner}",
                     $"RegistrationYear_{carAd.RegistrationYear}"
                 };
+
+                #region binning
+                //tulajdonságok sávosan elosztva
+
+                //ár
+                int price = Convert.ToInt32(carAd.Price);
+                string priceBin = price switch
+                {
+                    _ when price <= 800000 => "Price_VeryLow",
+                    _ when price <= 3500000 => "Price_Low",
+                    _ when price <= 10000000 => "Price_Medium",
+                    _ when price <= 20000000 => "Price_High",
+                    _ => "Price_VeryHigh"
+                };
+                features.Add(priceBin);
+
+
+                //megtett km
+                int mileage = Convert.ToInt32(carAd.Mileage);
+                string mileageBin = mileage switch
+                {
+                    _ when mileage <= 15000 => "Mileage_VeryLow",
+                    _ when mileage <= 50000 => "Mileage_Low",
+                    _ when mileage <= 180000 => "Mileage_Medium",
+                    _ when mileage <= 300000 => "Mileage_High",
+                    _ => "Mileage_VeryHigh"
+                };
+                features.Add(mileageBin);
+
+
+                //loero
+                int power = Convert.ToInt32(carAd.Power);
+                string powerBin = power switch
+                {
+                    _ when power <= 45 => "Power_VeryLow",
+                    _ when power <= 95 => "Power_Low",
+                    _ when power <= 160 => "Power_Medium",
+                    _ when power <= 300 => "Power_High",
+                    _ => "Power_VeryHigh"
+                };
+                features.Add(powerBin);
+
+
+                //ccm
+                string engineSizeBin;
+                if (carAd.EngineSize == "E")
+                {
+                    engineSizeBin = "EngineSize_Electric";
+                }
+                else
+                {
+                    int engineSize = Convert.ToInt32(carAd.EngineSize);
+                    engineSizeBin = engineSize switch
+                    {
+                        _ when engineSize <= 800 => "EngineSize_VeryLow",
+                        _ when engineSize <= 1450 => "EngineSize_Low",
+                        _ when engineSize <= 2400 => "EngineSize_Medium",
+                        _ when engineSize <= 3800 => "EngineSize_High",
+                        _ => "EngineSize_VeryHigh"
+                    };
+                }
+                features.Add(engineSizeBin);
+                #endregion binning
+
 
                 //egy feature előfordulását számolja (1 előfordulás = 1 növelés)
                 foreach (var feature in features)
@@ -382,9 +431,6 @@ namespace PolskaPaliwo.Repository
                     $"Condition_{carAd.Condition}",
                     $"Year_{carAd.ProductionYear}",
                     $"Transmission_{carAd.Transmission}",
-                    $"Mileage_{carAd.Mileage}",
-                    $"Power_{carAd.Power}",
-                    $"EngineSize_{carAd.EngineSize}",
                     $"FuelType_{carAd.FuelType}",
                     $"Drive_{carAd.Drive}",
                     $"Type_{carAd.Type}",
@@ -393,6 +439,70 @@ namespace PolskaPaliwo.Repository
                     $"FirstOwner_{carAd.FirstOwner}",
                     $"RegistrationYear_{carAd.RegistrationYear}"
                 };
+
+
+                #region binning
+                //tulajdonságok sávosan elosztva
+
+                //ár
+                int price = Convert.ToInt32(carAd.Price);
+                string priceBin = price switch
+                {
+                    _ when price <= 800000 => "Price_VeryLow",
+                    _ when price <= 3500000 => "Price_Low",
+                    _ when price <= 10000000 => "Price_Medium",
+                    _ when price <= 20000000 => "Price_High",
+                    _ => "Price_VeryHigh"
+                };
+                features.Add(priceBin);
+
+
+                //megtett km
+                int mileage = Convert.ToInt32(carAd.Mileage);
+                string mileageBin = mileage switch
+                {
+                    _ when mileage <= 15000 => "Mileage_VeryLow",
+                    _ when mileage <= 50000 => "Mileage_Low",
+                    _ when mileage <= 180000 => "Mileage_Medium",
+                    _ when mileage <= 300000 => "Mileage_High",
+                    _ => "Mileage_VeryHigh"
+                };
+                features.Add(mileageBin);
+
+
+                //loero
+                int power = Convert.ToInt32(carAd.Power);
+                string powerBin = power switch
+                {
+                    _ when power <= 45 => "Power_VeryLow",
+                    _ when power <= 95 => "Power_Low",
+                    _ when power <= 160 => "Power_Medium",
+                    _ when power <= 300 => "Power_High",
+                    _ => "Power_VeryHigh"
+                };
+                features.Add(powerBin);
+
+
+                //ccm
+                string engineSizeBin;
+                if (carAd.EngineSize == "E")
+                {
+                    engineSizeBin = "EngineSize_Electric";
+                }
+                else
+                {
+                    int engineSize = Convert.ToInt32(carAd.EngineSize);
+                    engineSizeBin = engineSize switch
+                    {
+                        _ when engineSize <= 800 => "EngineSize_VeryLow",
+                        _ when engineSize <= 1450 => "EngineSize_Low",
+                        _ when engineSize <= 2400 => "EngineSize_Medium",
+                        _ when engineSize <= 3800 => "EngineSize_High",
+                        _ => "EngineSize_VeryHigh"
+                    };
+                }
+                features.Add(engineSizeBin);
+                #endregion binning
 
                 foreach (var feature in features)
                 {
@@ -426,9 +536,6 @@ namespace PolskaPaliwo.Repository
                 $"Condition_{carAd.Condition}",
                 $"Year_{carAd.ProductionYear}",
                 $"Transmission_{carAd.Transmission}",
-                $"Mileage_{carAd.Mileage}",
-                $"Power_{carAd.Power}",
-                $"EngineSize_{carAd.EngineSize}",
                 $"FuelType_{carAd.FuelType}",
                 $"Drive_{carAd.Drive}",
                 $"Type_{carAd.Type}",
@@ -437,6 +544,69 @@ namespace PolskaPaliwo.Repository
                 $"FirstOwner_{carAd.FirstOwner}",
                 $"RegistrationYear_{carAd.RegistrationYear}"
             };
+
+            #region binning
+            //tulajdonságok sávosan elosztva
+
+            //ár
+            int price = Convert.ToInt32(carAd.Price);
+            string priceBin = price switch
+            {
+                _ when price <= 800000 => "Price_VeryLow",
+                _ when price <= 3500000 => "Price_Low",
+                _ when price <= 10000000 => "Price_Medium",
+                _ when price <= 20000000 => "Price_High",
+                _ => "Price_VeryHigh"
+            };
+            features.Add(priceBin);
+
+
+            //megtett km
+            int mileage = Convert.ToInt32(carAd.Mileage);
+            string mileageBin = mileage switch
+            {
+                _ when mileage <= 15000 => "Mileage_VeryLow",
+                _ when mileage <= 50000 => "Mileage_Low",
+                _ when mileage <= 180000 => "Mileage_Medium",
+                _ when mileage <= 300000 => "Mileage_High",
+                _ => "Mileage_VeryHigh"
+            };
+            features.Add(mileageBin);
+
+
+            //loero
+            int power = Convert.ToInt32(carAd.Power);
+            string powerBin = power switch
+            {
+                _ when power <= 45 => "Power_VeryLow",
+                _ when power <= 95 => "Power_Low",
+                _ when power <= 160 => "Power_Medium",
+                _ when power <= 300 => "Power_High",
+                _ => "Power_VeryHigh"
+            };
+            features.Add(powerBin);
+
+
+            //ccm
+            string engineSizeBin;
+            if (carAd.EngineSize == "E")
+            {
+                engineSizeBin = "EngineSize_Electric";
+            }
+            else
+            {
+                int engineSize = Convert.ToInt32(carAd.EngineSize);
+                engineSizeBin = engineSize switch
+                {
+                    _ when engineSize <= 800 => "EngineSize_VeryLow",
+                    _ when engineSize <= 1450 => "EngineSize_Low",
+                    _ when engineSize <= 2400 => "EngineSize_Medium",
+                    _ when engineSize <= 3800 => "EngineSize_High",
+                    _ => "EngineSize_VeryHigh"
+                };
+            }
+            features.Add(engineSizeBin);
+            #endregion binning
 
             foreach (var feature in features)
             {
