@@ -190,6 +190,29 @@ namespace PolskaPaliwo.Repository
                 CarAd currentCarAd = GetCarAdById(id);
                 recommendedCars.Add(currentCarAd);
             }
+
+            //diversity kalk
+            double totalSimilarity = 0;
+            int pairCount = 0;
+
+            for (int i = 0; i < recommendedCars.Count; i++)
+            {
+                for (int j = i + 1; j < recommendedCars.Count; j++)
+                {
+                    totalSimilarity += CalculateCosineSimilarity(GetTFIDFVectorForCarAd(recommendedCars[i]),GetTFIDFVectorForCarAd(recommendedCars[j]));
+                    pairCount++;
+                }
+            }
+
+            double averageSimilarity = totalSimilarity / pairCount;
+
+            double diversity = 1 - averageSimilarity;
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("The DIVERSITY is: " + diversity);
+            Console.WriteLine("=========================================================");
+
+
+
             int relevantRecommendations = 0;
 
             foreach (CarAd carAd in recommendedCars)
