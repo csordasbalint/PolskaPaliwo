@@ -114,6 +114,12 @@ namespace PolskaPaliwo.Repository
             //1. lépés: TF kiszámítása a user kereséseire
             Dictionary<string, double> termFrequency = CalculateTFInCarAds(carAds);
 
+            Console.WriteLine("TF for Features:");
+            foreach (var kvp in termFrequency)
+            {
+                Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+            }
+
             //2. lépés: IDF kiszámítása a user kereséseire
             Dictionary<string, double> inverseDocumentFrequency = CalculateIDFForCarAds(carAds);
 
@@ -321,6 +327,7 @@ namespace PolskaPaliwo.Repository
                 {
                     $"Brand_{carAd.Brand}",
                     $"Model_{carAd.Model}",
+                    $"Currency_{carAd.Currency}",
                     $"Condition_{carAd.Condition}",
                     $"Year_{carAd.ProductionYear}",
                     $"Transmission_{carAd.Transmission}",
@@ -329,6 +336,8 @@ namespace PolskaPaliwo.Repository
                     $"Type_{carAd.Type}",
                     $"Colour_{carAd.Colour}",
                     $"DoorsNumber_{carAd.DoorsNumber}",
+                    $"OriginCountry_{carAd.OriginCountry}",
+                    $"Location{carAd.Location}",
                     $"FirstOwner_{carAd.FirstOwner}",
                     $"RegistrationYear_{carAd.RegistrationYear}"
                 };
@@ -428,6 +437,7 @@ namespace PolskaPaliwo.Repository
                 {
                     $"Brand_{carAd.Brand}",
                     $"Model_{carAd.Model}",
+                    $"Currency_{carAd.Currency}",
                     $"Condition_{carAd.Condition}",
                     $"Year_{carAd.ProductionYear}",
                     $"Transmission_{carAd.Transmission}",
@@ -436,6 +446,8 @@ namespace PolskaPaliwo.Repository
                     $"Type_{carAd.Type}",
                     $"Colour_{carAd.Colour}",
                     $"DoorsNumber_{carAd.DoorsNumber}",
+                    $"OriginCountry_{carAd.OriginCountry}",
+                    $"Location{carAd.Location}",
                     $"FirstOwner_{carAd.FirstOwner}",
                     $"RegistrationYear_{carAd.RegistrationYear}"
                 };
@@ -533,6 +545,7 @@ namespace PolskaPaliwo.Repository
             {
                 $"Brand_{carAd.Brand}",
                 $"Model_{carAd.Model}",
+                $"Currency_{carAd.Currency}",
                 $"Condition_{carAd.Condition}",
                 $"Year_{carAd.ProductionYear}",
                 $"Transmission_{carAd.Transmission}",
@@ -541,6 +554,8 @@ namespace PolskaPaliwo.Repository
                 $"Type_{carAd.Type}",
                 $"Colour_{carAd.Colour}",
                 $"DoorsNumber_{carAd.DoorsNumber}",
+                $"OriginCountry_{carAd.OriginCountry}",
+                $"Location{carAd.Location}",
                 $"FirstOwner_{carAd.FirstOwner}",
                 $"RegistrationYear_{carAd.RegistrationYear}"
             };
