@@ -191,7 +191,7 @@ namespace PolskaPaliwo.Repository
                 recommendedCars.Add(currentCarAd);
             }
 
-
+            
             return recommendedCars;
         }
 
@@ -664,11 +664,26 @@ namespace PolskaPaliwo.Repository
             features.Add(engineSizeBin);
             #endregion binning
 
+            //foreach (var feature in features)
+            //{
+            //    if (featureCounts.ContainsKey(feature))
+            //    {
+            //        featureCounts[feature]++;
+            //    }
+            //    else
+            //    {
+            //        featureCounts[feature] = 1;
+            //    }
+            //}
+
+            //egy feature előfordulását számolja (1 előfordulás = 1 növelés, extrak eseten 0.5)
             foreach (var feature in features)
             {
+                double weight = feature.StartsWith("Feature_") ? 0.5 : 1; //extraknak csak 0.5
+
                 if (featureCounts.ContainsKey(feature))
                 {
-                    featureCounts[feature]++;
+                    featureCounts[feature] += weight; //megfelelo influence mertek
                 }
                 else
                 {
@@ -678,11 +693,15 @@ namespace PolskaPaliwo.Repository
 
             Dictionary<string, double> singleCarAdFeatureCount = featureCounts; //featureCounts egyből
 
+
+            //TF kiszámítása (1.lépés)
+            Dictionary<string, double> singleCarAdTF = CalculateTF(featureCounts);
+
             //IDF kiszámítása (2.lépés)
             Dictionary<string, double> singleCarAdIDF = CalculateIDF(new List<Dictionary<string, double>> { singleCarAdFeatureCount });
 
             //TF * IDF (3. lépés)
-            Dictionary<string, double> singleCarAdTFIDF = CalculateTF_IDF(CalculateTF(featureCounts), singleCarAdIDF);
+            Dictionary<string, double> singleCarAdTFIDF = CalculateTF_IDF(singleCarAdTF, singleCarAdIDF);
 
             //normalizálás (4.lépés)
             Dictionary<string, double> normalizedTFIDF = PerformL2Normalization(singleCarAdTFIDF);
