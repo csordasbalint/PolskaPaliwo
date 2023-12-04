@@ -179,7 +179,7 @@ namespace PolskaPaliwo.Repository
             //csak az id-k visszatérésnek
             var topXSimilarCarIds = similarityScores
                 .OrderByDescending(kvp => kvp.Value)
-                .Take(10) //ajanlasok szama
+                .Take(12) //ajanlasok szama
                 .Select(kvp => kvp.Key)
                 .ToList();
 
@@ -190,6 +190,40 @@ namespace PolskaPaliwo.Repository
                 CarAd currentCarAd = GetCarAdById(id);
                 recommendedCars.Add(currentCarAd);
             }
+
+
+
+            int pos = 0;
+            int counter = 0;
+            foreach (var item in carAds)
+            {
+                pos++;
+                if (recommendedCars.Contains(item))
+                {
+                    counter++;
+                    Console.WriteLine(pos);
+                }
+            }
+            Console.WriteLine("Number of same ads in recommended ads: " + counter); //same as user history
+
+            double totalReciprocalRank = 0;
+            int countOfRelevantItems = 0;
+
+            for (int i = 0; i < carAds.Count; i++)
+            {
+                int rank = recommendedCars.IndexOf(carAds[i]);
+                if (rank >= 0)
+                {
+                    totalReciprocalRank += 1.0 / (rank + 1);
+                    countOfRelevantItems++;
+                }
+            }
+
+            double meanReciprocalRank = totalReciprocalRank / countOfRelevantItems;
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("The MRR is: " + meanReciprocalRank);
+            Console.WriteLine("=========================================================");
+
 
             //diversity kalk
             double totalSimilarity = 0;
@@ -262,7 +296,7 @@ namespace PolskaPaliwo.Repository
             Console.WriteLine("The COVERAGE is: " + coverage.ToString("F7"));
             Console.WriteLine("=========================================================");
 
-            
+
             return recommendedCars;
         }
 
