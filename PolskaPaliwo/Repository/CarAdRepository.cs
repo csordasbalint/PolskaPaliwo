@@ -210,6 +210,28 @@ namespace PolskaPaliwo.Repository
             Console.WriteLine("=========================================================");
 
 
+
+            //TOP K PRECISION - RECALL
+            int k = 4; // top k darab carad vizsgalata
+            int relevantRecommendationsInTopK = 0;
+
+            for (int i = 0; i < k && i < recommendedCars.Count; i++)
+            {
+                if (carAds.Contains(recommendedCars[i]))
+                {
+                    relevantRecommendationsInTopK++;
+                }
+            }
+
+            double precisionAtK = (double)relevantRecommendationsInTopK / k;
+            double recallAtK = (double)relevantRecommendationsInTopK / carAds.Count;
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("The PRECISION in TOP K rec is: " + Math.Round(precisionAtK, 2));
+            Console.WriteLine("The RECALL in TOP K rec is: " + Math.Round(recallAtK, 2));
+            Console.WriteLine("=========================================================");
+
+
+
             
             return recommendedCars;
         }
