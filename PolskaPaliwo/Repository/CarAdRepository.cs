@@ -149,13 +149,13 @@ namespace PolskaPaliwo.Repository
 
 
             List<CarAd> allCarAds = GetAllCarAds(); //összes hirdetés kigyűjtése db-ből, majd history Id-k törlése
-            for (int i = allCarAds.Count -1; i>=0; i--)
-            {
-                if (carAds.Any(adToRemove => adToRemove.Id == allCarAds[i].Id))
-                {
-                    allCarAds.RemoveAt(i);
-                }
-            }
+            //for (int i = allCarAds.Count -1; i>=0; i--)
+            //{
+            //    if (carAds.Any(adToRemove => adToRemove.Id == allCarAds[i].Id))
+            //    {
+            //        allCarAds.RemoveAt(i);
+            //    }
+            //}
 
 
             Dictionary<string, double> similarityScores = new Dictionary<string, double>();
@@ -179,7 +179,7 @@ namespace PolskaPaliwo.Repository
             //csak az id-k visszatérésnek
             var topXSimilarCarIds = similarityScores
                 .OrderByDescending(kvp => kvp.Value)
-                .Take(10)
+                .Take(10) //ajanlasok szama
                 .Select(kvp => kvp.Key)
                 .ToList();
 
@@ -198,16 +198,16 @@ namespace PolskaPaliwo.Repository
 
 
         //Minden featurehöz visszaadja, milyen gyakran szerepel az összes featurehöz viszonyítva (TF)
-        private Dictionary<string, double> CalculateTF(Dictionary<string, int> featureCounts)
+        private Dictionary<string, double> CalculateTF(Dictionary<string, double> featureCounts)
         {
             Dictionary<string, double> termFrequency = new Dictionary<string, double>();
 
-            int totalFeaturesInDocument = featureCounts.Values.Sum(); //összes feature száma
+            double totalFeaturesInDocument = featureCounts.Values.Sum(); //összes feature száma
 
             foreach (var kvp in featureCounts)
             {
                 string feature = kvp.Key;  //feature, amit eppen vizsgalok
-                int frequency = kvp.Value; //hanyszor fordult elo
+                double frequency = kvp.Value; //hanyszor fordult elo
 
                 double tf = (double)frequency / totalFeaturesInDocument;  // TF kiszámítása az adott featurenek -> gyakoriság/összes feature száma
                 termFrequency[feature] = tf; //adott kulcs (feature) alapján beállítja valuenak a TF-et
@@ -218,7 +218,7 @@ namespace PolskaPaliwo.Repository
 
 
         //Minden featurehöz visszaadja az IDF-et
-        private Dictionary<string, double> CalculateIDF(List<Dictionary<string, int>> allFeatureCounts)
+        private Dictionary<string, double> CalculateIDF(List<Dictionary<string, double>> allFeatureCounts)
         {
             Dictionary<string, double> inverseDocumentFrequency = new Dictionary<string, double>();
 
@@ -317,7 +317,7 @@ namespace PolskaPaliwo.Repository
         private Dictionary<string, double> CalculateTFInCarAds(List<CarAd> carAds) //paraméterként kapja a user korábbi kereséseit
         {
             carAds.RemoveAll(item => item == null);
-            Dictionary<string, int> featureCounts = new Dictionary<string, int>();
+            Dictionary<string, double> featureCounts = new Dictionary<string, double>();
 
 
             foreach (var carAd in carAds)
@@ -340,7 +340,16 @@ namespace PolskaPaliwo.Repository
                     $"Location{carAd.Location}",
                     $"FirstOwner_{carAd.FirstOwner}",
                     $"RegistrationYear_{carAd.RegistrationYear}"
-                };
+            };
+
+                if (carAd.Features != null)
+                {
+                    foreach (var feature in carAd.Features)
+                    {
+                        features.Add($"Feature_{feature}");
+                    }
+                }
+
 
                 #region binning
                 //tulajdonságok sávosan elosztva
@@ -407,11 +416,26 @@ namespace PolskaPaliwo.Repository
 
 
                 //egy feature előfordulását számolja (1 előfordulás = 1 növelés)
+                //foreach (var feature in features)
+                //{
+                //    if (featureCounts.ContainsKey(feature))
+                //    {
+                //        featureCounts[feature]++;
+                //    }
+                //    else
+                //    {
+                //        featureCounts[feature] = 1;
+                //    }
+                //}
+
+                //egy feature előfordulását számolja (1 előfordulás = 1 növelés, extrak eseten 0.5)
                 foreach (var feature in features)
                 {
+                    double weight = feature.StartsWith("Feature_") ? 0.5 : 1; //extraknak csak 0.5
+
                     if (featureCounts.ContainsKey(feature))
                     {
-                        featureCounts[feature]++;
+                        featureCounts[feature] += weight; //megfelelo influence mertek
                     }
                     else
                     {
@@ -428,11 +452,11 @@ namespace PolskaPaliwo.Repository
         //IDF a user korábbi kereséseire
         private Dictionary<string, double> CalculateIDFForCarAds(List<CarAd> carAds)
         {
-            List<Dictionary<string, int>> allFeatureCounts = new List<Dictionary<string, int>>();
+            List<Dictionary<string, double>> allFeatureCounts = new List<Dictionary<string, double>>();
 
             foreach (var carAd in carAds)
             {
-                Dictionary<string, int> featureCounts = new Dictionary<string, int>();
+                Dictionary<string, double> featureCounts = new Dictionary<string, double>();
                 var features = new List<string>
                 {
                     $"Brand_{carAd.Brand}",
@@ -451,6 +475,15 @@ namespace PolskaPaliwo.Repository
                     $"FirstOwner_{carAd.FirstOwner}",
                     $"RegistrationYear_{carAd.RegistrationYear}"
                 };
+
+                if (carAd.Features != null)
+                {
+                    foreach (var feature in carAd.Features)
+                    {
+                        features.Add($"Feature_{feature}");
+                    }
+                }
+
 
 
                 #region binning
@@ -538,7 +571,7 @@ namespace PolskaPaliwo.Repository
         //adott carAd-ra visszaadja a normalizált értéket
         private Dictionary<string, double> GetTFIDFVectorForCarAd(CarAd carAd)
         {
-            Dictionary<string, int> featureCounts = new Dictionary<string, int>();
+            Dictionary<string, double> featureCounts = new Dictionary<string, double>();
 
             //megadott featureöket veszi fiygelembe
             var features = new List<string>
@@ -559,6 +592,14 @@ namespace PolskaPaliwo.Repository
                 $"FirstOwner_{carAd.FirstOwner}",
                 $"RegistrationYear_{carAd.RegistrationYear}"
             };
+
+            if (carAd.Features != null)
+            {
+                foreach (var feature in carAd.Features)
+                {
+                    features.Add($"Feature_{feature}");
+                }
+            }
 
             #region binning
             //tulajdonságok sávosan elosztva
@@ -635,10 +676,10 @@ namespace PolskaPaliwo.Repository
                 }
             }
 
-            Dictionary<string, int> singleCarAdFeatureCount = featureCounts; //featureCounts egyből
+            Dictionary<string, double> singleCarAdFeatureCount = featureCounts; //featureCounts egyből
 
             //IDF kiszámítása (2.lépés)
-            Dictionary<string, double> singleCarAdIDF = CalculateIDF(new List<Dictionary<string, int>> { singleCarAdFeatureCount });
+            Dictionary<string, double> singleCarAdIDF = CalculateIDF(new List<Dictionary<string, double>> { singleCarAdFeatureCount });
 
             //TF * IDF (3. lépés)
             Dictionary<string, double> singleCarAdTFIDF = CalculateTF_IDF(CalculateTF(featureCounts), singleCarAdIDF);
