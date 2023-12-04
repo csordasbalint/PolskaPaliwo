@@ -634,5 +634,7 @@ namespace PolskaPaliwo.Repository
             return normalizedTFIDF; //normalizált értékű dictionaryvel tér vissza
         }
 
+
+        //testing laptop setup with a test commit
     }
 }
