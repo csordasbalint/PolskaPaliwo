@@ -190,6 +190,25 @@ namespace PolskaPaliwo.Repository
                 CarAd currentCarAd = GetCarAdById(id);
                 recommendedCars.Add(currentCarAd);
             }
+            int relevantRecommendations = 0;
+
+            foreach (CarAd carAd in recommendedCars)
+            {
+                if (carAds.Contains(carAd))
+                {
+                    relevantRecommendations++;
+                }
+            }
+
+            double precision = (double)relevantRecommendations / recommendedCars.Count;
+            double recall = (double)relevantRecommendations / carAds.Count;
+            double F1Score = 2 * (precision * recall) / (precision + recall);
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("The PRECISION is: " + Math.Round(precision,2));
+            Console.WriteLine("The RECALL is: " + Math.Round(recall,2));
+            Console.WriteLine("The F1Score is: " + Math.Round(F1Score,2));
+            Console.WriteLine("=========================================================");
+
 
             
             return recommendedCars;
