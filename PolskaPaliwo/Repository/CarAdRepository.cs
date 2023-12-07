@@ -297,6 +297,26 @@ namespace PolskaPaliwo.Repository
             Console.WriteLine("=========================================================");
 
 
+
+            double dcg = 0;
+            for (int i = 0; i < recommendedCars.Count; i++)
+            {
+                double relevance = carAds.Contains(recommendedCars[i]) ? 1 : 0; // Binary relevance
+                if (i == 0)
+                {
+                    dcg += relevance;
+                }
+                else
+                {
+                    dcg += relevance / Math.Log(i + 1, 2);
+                }
+            }
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("The DCG is: " + dcg);
+            Console.WriteLine("=========================================================");
+
+
+
             return recommendedCars;
         }
 
