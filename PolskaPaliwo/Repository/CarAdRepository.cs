@@ -179,7 +179,7 @@ namespace PolskaPaliwo.Repository
             //csak az id-k visszatérésnek
             var topXSimilarCarIds = similarityScores
                 .OrderByDescending(kvp => kvp.Value)
-                .Take(12) //ajanlasok szama
+                .Take(30) //ajanlasok szama
                 .Select(kvp => kvp.Key)
                 .ToList();
 
@@ -316,6 +316,24 @@ namespace PolskaPaliwo.Repository
             Console.WriteLine("=========================================================");
 
 
+            double idcg = 0;
+            for (int i = 0; i < carAds.Count; i++)
+            {
+                if (i == 0)
+                {
+                    idcg += 1;
+                }
+                else
+                {
+                    idcg += 1 / Math.Log(i + 1, 2);
+                }
+            }
+
+            double ndcg = dcg / idcg;
+
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("The NDCG is: " + ndcg);
+            Console.WriteLine("=========================================================");
 
             return recommendedCars;
         }
