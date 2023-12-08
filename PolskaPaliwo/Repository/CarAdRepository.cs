@@ -179,7 +179,7 @@ namespace PolskaPaliwo.Repository
             //csak az id-k visszatérésnek
             var topXSimilarCarIds = similarityScores
                 .OrderByDescending(kvp => kvp.Value)
-                .Take(30) //ajanlasok szama
+                .Take(12) //ajanlasok szama
                 .Select(kvp => kvp.Key)
                 .ToList();
 
@@ -219,10 +219,10 @@ namespace PolskaPaliwo.Repository
                 }
             }
 
-            double meanReciprocalRank = totalReciprocalRank / countOfRelevantItems;
-            Console.WriteLine("=========================================================");
-            Console.WriteLine("The MRR is: " + meanReciprocalRank);
-            Console.WriteLine("=========================================================");
+            double mrr = totalReciprocalRank / countOfRelevantItems;
+            //Console.WriteLine("=====================================================================");
+            //Console.WriteLine("The MRR is: " + mrr);
+            //Console.WriteLine("=====================================================================");
 
 
             //diversity kalk
@@ -241,9 +241,9 @@ namespace PolskaPaliwo.Repository
             double averageSimilarity = totalSimilarity / pairCount;
 
             double diversity = 1 - averageSimilarity;
-            Console.WriteLine("=========================================================");
-            Console.WriteLine("The DIVERSITY is: " + diversity);
-            Console.WriteLine("=========================================================");
+            //Console.WriteLine("=====================================================================");
+            //Console.WriteLine("The DIVERSITY is: " + diversity);
+            //Console.WriteLine("=====================================================================");
 
 
 
@@ -260,11 +260,11 @@ namespace PolskaPaliwo.Repository
             double precision = (double)relevantRecommendations / recommendedCars.Count;
             double recall = (double)relevantRecommendations / carAds.Count;
             double F1Score = 2 * (precision * recall) / (precision + recall);
-            Console.WriteLine("=========================================================");
-            Console.WriteLine("The PRECISION is: " + Math.Round(precision,2));
-            Console.WriteLine("The RECALL is: " + Math.Round(recall,2));
-            Console.WriteLine("The F1Score is: " + Math.Round(F1Score,2));
-            Console.WriteLine("=========================================================");
+            //Console.WriteLine("=====================================================================");
+            //Console.WriteLine("The PRECISION is: " + Math.Round(precision,2));
+            //Console.WriteLine("The RECALL is: " + Math.Round(recall,2));
+            //Console.WriteLine("The F1Score is: " + Math.Round(F1Score,2));
+            //Console.WriteLine("=====================================================================");
 
 
 
@@ -282,19 +282,19 @@ namespace PolskaPaliwo.Repository
 
             double precisionAtK = (double)relevantRecommendationsInTopK / k;
             double recallAtK = (double)relevantRecommendationsInTopK / carAds.Count;
-            Console.WriteLine("=========================================================");
-            Console.WriteLine("The PRECISION in TOP K rec is: " + Math.Round(precisionAtK, 2));
-            Console.WriteLine("The RECALL in TOP K rec is: " + Math.Round(recallAtK, 2));
-            Console.WriteLine("=========================================================");
+            //Console.WriteLine("=====================================================================");
+            //Console.WriteLine("The PRECISION in TOP K rec is: " + Math.Round(precisionAtK, 2));
+            //Console.WriteLine("The RECALL in TOP K rec is: " + Math.Round(recallAtK, 2));
+            //Console.WriteLine("=====================================================================");
 
 
 
 
             HashSet<string> uniqueRecommendedCarIds = new HashSet<string>(recommendedCars.Select(car => car.Id));
             double coverage = Math.Round((double)uniqueRecommendedCarIds.Count / allCarAds.Count,8);
-            Console.WriteLine("=========================================================");
+            Console.WriteLine("=====================================================================");
             Console.WriteLine("The COVERAGE is: " + coverage.ToString("F7"));
-            Console.WriteLine("=========================================================");
+            Console.WriteLine("=====================================================================");
 
 
 
@@ -311,9 +311,9 @@ namespace PolskaPaliwo.Repository
                     dcg += relevance / Math.Log(i + 1, 2);
                 }
             }
-            Console.WriteLine("=========================================================");
-            Console.WriteLine("The DCG is: " + dcg);
-            Console.WriteLine("=========================================================");
+            ////Console.WriteLine("=====================================================================");
+            //Console.WriteLine("The DCG is: " + dcg);
+            ////Console.WriteLine("=====================================================================");
 
 
             double idcg = 0;
@@ -331,9 +331,16 @@ namespace PolskaPaliwo.Repository
 
             double ndcg = dcg / idcg;
 
-            Console.WriteLine("=========================================================");
-            Console.WriteLine("The NDCG is: " + ndcg);
-            Console.WriteLine("=========================================================");
+            ////Console.WriteLine("=====================================================================");
+            //Console.WriteLine("The NDCG is: " + ndcg);
+            ////Console.WriteLine("=====================================================================");
+
+            
+            Console.WriteLine("=====================================================================");
+            Console.WriteLine("{0,-10}| {1,-10}| {2,-10}| {3,-10}| {4,-10}| {5,-10}", "MRR", "NDCG", "PRECISION", "RECALL", "F1SCORE", "DIVERSITY");
+            Console.WriteLine("{0,-10:F2}| {1,-10:F2}| {2,-10:F2}| {3,-10:F2}| {4,-10:F2}| {5,-10:F2}", mrr, ndcg, precision, recall, F1Score, diversity);
+            Console.WriteLine("=====================================================================");
+
 
             return recommendedCars;
         }
