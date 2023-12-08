@@ -282,9 +282,11 @@ namespace PolskaPaliwo.Repository
 
             double precisionAtK = (double)relevantRecommendationsInTopK / k;
             double recallAtK = (double)relevantRecommendationsInTopK / carAds.Count;
+            double f1ScoreAtK = 2 * (precisionAtK * recallAtK) / (precisionAtK + recallAtK);
             //Console.WriteLine("=====================================================================");
             //Console.WriteLine("The PRECISION in TOP K rec is: " + Math.Round(precisionAtK, 2));
             //Console.WriteLine("The RECALL in TOP K rec is: " + Math.Round(recallAtK, 2));
+            //Console.WriteLine("The F1SCORE in TOP K rec is: " + Math.Round(f1ScoreAtK, 2));
             //Console.WriteLine("=====================================================================");
 
 
