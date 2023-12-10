@@ -45,9 +45,6 @@ for index, item in enumerate(string_list, start=1):
                 print(f"Skipping '{item}'. Failed to download after multiple attempts.")
                 break  # Image download failed after multiple attempts, break out of the while loop
 
-    if index > 2850:
-        break
-
 print("Script ended")
 
 # Calculate and print script run time
