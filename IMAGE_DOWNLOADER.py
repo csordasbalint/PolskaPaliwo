@@ -1,14 +1,13 @@
 import time as time_measure
+start_time = time_measure.time()
+
+print("==================================================================================")
+print("script started")
+
 import os
 import shutil
 import pandas as pd
 from bing_image_downloader import downloader
-
-# Starting time measurement
-start_time = time_measure.time()
-
-print("==================================================================================")
-print("Script started")
 
 input_file_path = r"C:/Users/Csordi/Downloads/car_to_db.csv"
 df = pd.read_csv(input_file_path, delimiter=';', index_col=False)
@@ -47,8 +46,8 @@ for index, item in enumerate(string_list, start=1):
 
 print("Script ended")
 
-# Calculate and print script run time
 end_time = time_measure.time()
 run_time = end_time - start_time
 print(f"Run time: {run_time:.2f} seconds")
+
 print("==================================================================================")
