@@ -338,10 +338,10 @@ namespace PolskaPaliwo.Repository
             ////Console.WriteLine("=====================================================================");
 
             
-            Console.WriteLine("=====================================================================");
-            Console.WriteLine("{0,-10}| {1,-10}| {2,-10}| {3,-10}| {4,-10}| {5,-10}", "MRR", "NDCG", "PRECISION", "RECALL", "F1SCORE", "DIVERSITY");
-            Console.WriteLine("{0,-10:F2}| {1,-10:F2}| {2,-10:F2}| {3,-10:F2}| {4,-10:F2}| {5,-10:F2}", mrr, ndcg, precision, recall, F1Score, diversity);
-            Console.WriteLine("=====================================================================");
+            Console.WriteLine("==========================================================================================================");
+            Console.WriteLine("{0,-10}| {1,-10}| {2,-10}| {3,-10}| {4,-10}| {5,-10}| {6,-10}| {7,-10}| {8,-10}", "MRR", "NDCG", "PRECISION", "RECALL", "F1SCORE", "PREC K", "RECALL K", "F1SCORE K", "DIVERSITY");
+            Console.WriteLine("{0,-10:F2}| {1,-10:F2}| {2,-10:F2}| {3,-10:F2}| {4,-10:F2}| {5,-10:F2}| {6,-10:F2}| {7,-10:F2}| {8,-10:F2}", mrr, ndcg, precision, recall, F1Score, precisionAtK, recallAtK, f1ScoreAtK, diversity);
+            Console.WriteLine("==========================================================================================================");
 
 
             return recommendedCars;

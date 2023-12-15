@@ -44,6 +44,7 @@ namespace PolskaPaliwo.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CarAd carAd)
         {
+            var userId = _userManager.GetUserId(this.User);
             string json = HttpContext.Session.GetString("SearchResults");
             if (json != null)
             {
@@ -58,8 +59,7 @@ namespace PolskaPaliwo.Controllers
 
                 ViewBag.SearchResults = searchResults; //first viewbag
                 HttpContext.Session.SetString("SearchResults", JsonConvert.SerializeObject(searchResults));
-
-                var userId = _userManager.GetUserId(this.User);
+                
                 if (userId != null)
                 {
                     var user = await _userManager.FindByIdAsync(userId);
@@ -70,6 +70,12 @@ namespace PolskaPaliwo.Controllers
 
                 return RedirectToAction("ResultsForPrevious");
             }
+
+            if (userId != null)
+            {
+                _carAdRepository.UpdateCarAd(carAd);
+            }
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -86,6 +92,7 @@ namespace PolskaPaliwo.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            var userId = _userManager.GetUserId(this.User);
             string json = HttpContext.Session.GetString("SearchResults");
             if (json != null)
             {
@@ -96,7 +103,7 @@ namespace PolskaPaliwo.Controllers
                 ViewBag.SearchResults = searchResults; //first viewbag
                 HttpContext.Session.SetString("SearchResults", JsonConvert.SerializeObject(searchResults));
 
-                var userId = _userManager.GetUserId(this.User);
+                
                 if (userId != null)
                 {
                     var user = await _userManager.FindByIdAsync(userId);
@@ -109,8 +116,11 @@ namespace PolskaPaliwo.Controllers
                     ViewBag.RecommendedAds = recommendedAds; //second viewbag
                     return RedirectToAction("ResultsForPrevious");
                 }
-
                 return RedirectToAction("ResultsForPrevious");
+            }
+            if (userId != null)
+            {
+                _carAdRepository.DeleteCarAd(id);
             }
             return RedirectToAction("Index", "Home");
         }
@@ -177,7 +187,7 @@ namespace PolskaPaliwo.Controllers
                     {
                         user.PreviousIds += id.ToString();
                     }
-                    else if (user.PreviousIds.Count(x => x == ',') == 9)
+                    else if (user.PreviousIds.Count(x => x == ',') == 4)
                     {
                         int idx = user.PreviousIds.IndexOf(',');
                         user.PreviousIds = user.PreviousIds.Substring(idx + 1);
@@ -211,7 +221,7 @@ namespace PolskaPaliwo.Controllers
                 if (userId != null)
                 {
                     var user = await _userManager.FindByIdAsync(userId);
-                    if (user.PreviousIds != null && user.PreviousIds.Count(x => x == ',') == 9)
+                    if (user.PreviousIds != null && user.PreviousIds.Count(x => x == ',') == 4)
                     {
                         List<CarAd> recommendedAds = _carAdRepository.ListRecommendedCars(userId, user.PreviousIds);
                         ViewBag.RecommendedAds = recommendedAds; //second viewbag
